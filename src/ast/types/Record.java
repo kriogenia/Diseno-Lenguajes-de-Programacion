@@ -10,4 +10,14 @@ public class Record implements Type {
     public Object getValue() {
         return records;
     }
+
+    @Override
+    public int getLine() {
+        return 0;
+    }
+
+    @Override
+    public int getColumn() {
+        return 0;
+    }
 }

@@ -1,5 +1,7 @@
 package ast.sentences;
 
-public interface Sentence {
+import ast.ASTNode;
+
+public interface Sentence extends ASTNode {
 
 }
