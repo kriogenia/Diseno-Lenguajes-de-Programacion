@@ -1,13 +1,13 @@
 package ast.types;
 
-import ast.sentences.Sentence;
+import ast.definitions.VariableDefinition;
 
 import java.util.List;
 
 public class Function implements Type {
 
-    private List<Sentence> sentences;
-    private List<Type> functionTypes;
+    private List<VariableDefinition> params;
+    private List<Type> returnType;
 
 
     @Override
