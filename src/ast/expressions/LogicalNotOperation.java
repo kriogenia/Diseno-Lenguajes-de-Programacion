@@ -1,16 +1,13 @@
 package ast.expressions;
 
-public class LogicalNotOperation implements Expression{
+import ast.AbstractASTNode;
+
+public class LogicalNotOperation extends AbstractASTNode implements Expression {
 
     private Expression expression;
 
-    @Override
-    public int getLine() {
-        return 0;
-    }
-
-    @Override
-    public int getColumn() {
-        return 0;
+    public LogicalNotOperation(int line, int column, Expression expression) {
+        super(line, column);
+        this.expression = expression;
     }
 }
