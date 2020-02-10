@@ -1,17 +1,15 @@
 package ast.expressions;
 
-public class ArrayAccess implements Expression{
+import ast.AbstractASTNode;
+
+public class ArrayAccess extends AbstractASTNode implements Expression{
 
     private Expression left;
     private Expression right;
 
-    @Override
-    public int getLine() {
-        return 0;
-    }
-
-    @Override
-    public int getColumn() {
-        return 0;
+    public ArrayAccess(int line, int column, Expression left, Expression right) {
+        super(line, column);
+        this.left = left;
+        this.right = right;
     }
 }

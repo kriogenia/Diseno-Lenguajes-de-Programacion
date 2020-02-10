@@ -1,16 +1,13 @@
 package ast.expressions;
 
-public class RealLiteral implements Expression {
+import ast.AbstractASTNode;
+
+public class RealLiteral extends AbstractASTNode implements Expression {
 
     private double value;
 
-    @Override
-    public int getLine() {
-        return 0;
-    }
-
-    @Override
-    public int getColumn() {
-        return 0;
+    public RealLiteral(int line, int column, double value) {
+        super(line, column);
+        this.value = value;
     }
 }

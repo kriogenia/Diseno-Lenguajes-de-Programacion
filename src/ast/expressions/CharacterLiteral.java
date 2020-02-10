@@ -1,16 +1,13 @@
 package ast.expressions;
 
-public class CharacterLiteral implements Expression {
+import ast.AbstractASTNode;
+
+public class CharacterLiteral extends AbstractASTNode implements Expression {
 
     private char value;
 
-    @Override
-    public int getLine() {
-        return 0;
-    }
-
-    @Override
-    public int getColumn() {
-        return 0;
+    public CharacterLiteral(int line, int column, char value) {
+        super(line, column);
+        this.value = value;
     }
 }

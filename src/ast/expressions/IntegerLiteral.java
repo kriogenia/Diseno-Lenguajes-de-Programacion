@@ -1,16 +1,13 @@
 package ast.expressions;
 
-public class IntegerLiteral implements Expression {
+import ast.AbstractASTNode;
+
+public class IntegerLiteral extends AbstractASTNode implements Expression {
 
     private int value;
 
-    @Override
-    public int getLine() {
-        return 0;
-    }
-
-    @Override
-    public int getColumn() {
-        return 0;
+    public IntegerLiteral(int line, int column, int value) {
+        super(line, column);
+        this.value = value;
     }
 }

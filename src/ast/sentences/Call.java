@@ -1,22 +1,19 @@
 package ast.sentences;
 
+import ast.AbstractASTNode;
 import ast.expressions.Expression;
+import ast.expressions.Variable;
 
 import java.util.List;
 
-public class Call implements Sentence {
+public class Call extends AbstractASTNode implements Sentence, Expression {
 
-    private Expression function;
+    private Variable function;
     private List<Expression> params;
 
-
-    @Override
-    public int getLine() {
-        return 0;
-    }
-
-    @Override
-    public int getColumn() {
-        return 0;
+    public Call(int line, int column, Variable function, List<Expression> params) {
+        super(line, column);
+        this.function = function;
+        this.params.addAll(params);
     }
 }

@@ -1,18 +1,8 @@
 package ast.expressions;
 
-public class LogicalOperation implements Expression{
+public class LogicalOperation extends AbstractBinarialOperation {
 
-    private String operation;
-    private Expression left;
-    private Expression right;
-
-    @Override
-    public int getLine() {
-        return 0;
-    }
-
-    @Override
-    public int getColumn() {
-        return 0;
+    public LogicalOperation(int line, int column, Expression left, String operation, Expression right) {
+        super(line, column, left, operation, right);
     }
 }

@@ -4,24 +4,14 @@ import ast.ASTNode;
 import ast.sentences.Sentence;
 import ast.types.Type;
 
-public class VariableDefinition implements Definition, Sentence {
+public class VariableDefinition extends AbstractDefinition {
 
-    private String name;
-    private Type type;
+    private int scope;
+    private int offset;
 
-    @Override
-    public String getName() { return name; }
-
-    @Override
-    public Type getType() { return type; }
-
-    @Override
-    public int getLine() {
-        return 0;
-    }
-
-    @Override
-    public int getColumn() {
-        return 0;
+    public VariableDefinition(int line, int column, String name, Type type, int scope, int offset) {
+        super(line, column, name, type);
+        this.scope = scope;
+        this.offset = offset;
     }
 }

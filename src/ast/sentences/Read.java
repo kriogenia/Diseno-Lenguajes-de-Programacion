@@ -1,18 +1,16 @@
 package ast.sentences;
 
+import ast.AbstractASTNode;
+import ast.expressions.Expression;
+
 import java.util.List;
 
-public class Read implements Sentence {
+public class Read extends AbstractASTNode implements Sentence {
 
-    private List<Sentence> sentences;
+    private List<Expression> expressionions;
 
-    @Override
-    public int getLine() {
-        return 0;
-    }
-
-    @Override
-    public int getColumn() {
-        return 0;
+    public Read(int line, int column, List<Expression> expressionions) {
+        super(line, column);
+        this.expressionions.addAll(expressionions);
     }
 }

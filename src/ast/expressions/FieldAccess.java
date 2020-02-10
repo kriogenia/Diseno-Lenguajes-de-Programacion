@@ -1,17 +1,15 @@
 package ast.expressions;
 
-public class FieldAccess implements Expression{
+import ast.AbstractASTNode;
 
-    private Expression left;
-    private Expression right;
+public class FieldAccess extends AbstractASTNode implements Expression{
 
-    @Override
-    public int getLine() {
-        return 0;
-    }
+    private Expression expression;
+    private String name;
 
-    @Override
-    public int getColumn() {
-        return 0;
+    public FieldAccess(int line, int column, String name, Expression expression) {
+        super(line, column);
+        this.name = name;
+        this.expression = expression;
     }
 }
