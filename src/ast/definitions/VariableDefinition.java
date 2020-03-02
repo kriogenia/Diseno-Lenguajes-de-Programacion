@@ -9,8 +9,12 @@ public class VariableDefinition extends AbstractDefinition {
     private int scope;
     private int offset;
 
-    public VariableDefinition(int line, int column, String name, Type type, int scope, int offset) {
+    public VariableDefinition(int line, int column, String name, Type type) {
         super(line, column, name, type);
+    }
+
+    public VariableDefinition(int line, int column, String name, Type type, int scope, int offset) {
+        this(line, column, name, type);
         this.scope = scope;
         this.offset = offset;
     }

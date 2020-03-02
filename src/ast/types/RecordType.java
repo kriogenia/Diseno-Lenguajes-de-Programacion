@@ -2,6 +2,7 @@ package ast.types;
 
 import ast.AbstractASTNode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecordType extends AbstractASTNode implements Type {
@@ -10,6 +11,7 @@ public class RecordType extends AbstractASTNode implements Type {
 
     public RecordType(int line, int column, List<RecordField> records) {
         super(line, column);
-        this.records.addAll(records);
+        this.records = records;
     }
+
 }

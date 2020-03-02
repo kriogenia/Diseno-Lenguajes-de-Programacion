@@ -1,5 +1,10 @@
-// Generated from E:/Clase/DLP/Diseno-Lenguajes-de-Programacion/src/parser\Cmm.g4 by ANTLR 4.8
+// Generated from C:/Users/uo265710/IdeaProjects/Diseno-Lenguajes-de-Programacion/src/parser\Cmm.g4 by ANTLR 4.8
 package parser;
+
+    import ast.*;
+    import ast.definitions.*;
+    import ast.types.*;
+
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;

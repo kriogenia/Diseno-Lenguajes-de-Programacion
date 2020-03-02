@@ -1,14 +1,35 @@
-grammar Cmm;	
+grammar Cmm;
 
-program: (vardef|funcdef)+
+@header {
+    import ast.*;
+    import ast.definitions.*;
+    import ast.types.*;
+}
+
+program returns [Program ast]: {$ast = new Program();}
+    (vardef {$ast.addAll($vardef.ast);}
+        |funcdef)+
 	;
 
-vardef: param (',' ID)* ';'                             // Simple type
-    | 'struct' '{' (param ';')+ '}' ID ';'              // Struct
-    | primitiveType ('[' INT_CONSTANT ']')+ ID ';'      // Arrays
+vardef returns [List<Definition> ast]: {$ast = new ArrayList<>();}
+    type id1=ID {$ast.add(new VariableDefinition($id1.getLine(), $id1.getCharPositionInLine(), $id1.text, $type.ast));}
+        (',' id2=ID {$ast.add(new VariableDefinition($id1.getLine(), $id1.getCharPositionInLine(), $id2.text, $type.ast));})* ';'
+
     ;
 
-primitiveType: 'int' | 'char' | 'double'
+type returns [Type ast]:
+    // Primitive types
+    primitiveType {$ast = $primitiveType.ast;}
+    // Struct
+    | 'struct' '{' {List<RecordField> list = new ArrayList<>();}
+        (type ID ';' {list.add(new RecordField(0,0, $ID.text, $type.ast));})+ '}' {$ast = new RecordType(0,0,list);}
+    // Array
+    | type ('[' INT_CONSTANT ']' )+
+;
+primitiveType returns [Type ast]:
+    'int' { $ast = new IntegerType(0,0);}
+     | 'char' { $ast = new CharacterType(0,0);}
+     | 'double' { $ast = new RealType(0,0);}
     ;
 
 funcdef: (primitiveType|'void') ID '(' params? ')''{' vardef* sentence* '}'
@@ -17,7 +38,7 @@ funcdef: (primitiveType|'void') ID '(' params? ')''{' vardef* sentence* '}'
 params: param (',' param)*
     ;
 
-param: primitiveType ID
+param: type ID
     ;
 
 sentence : funccall ';'
