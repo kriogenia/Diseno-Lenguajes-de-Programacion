@@ -4,7 +4,7 @@ import ast.ASTNode;
 import ast.sentences.Sentence;
 import ast.types.Type;
 
-public class VariableDefinition extends AbstractDefinition {
+public class VariableDefinition extends AbstractDefinition implements Sentence {
 
     private int scope;
     private int offset;

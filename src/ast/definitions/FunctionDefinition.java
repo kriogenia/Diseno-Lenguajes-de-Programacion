@@ -3,6 +3,7 @@ package ast.definitions;
 import ast.sentences.Sentence;
 import ast.types.Type;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionDefinition extends AbstractDefinition {
@@ -11,6 +12,7 @@ public class FunctionDefinition extends AbstractDefinition {
 
     public FunctionDefinition(int line, int column, String name, Type type, List<Sentence> body) {
         super(line, column, name, type);
+        this.body = new ArrayList<>();
         this.body.addAll(body);
     }
 }

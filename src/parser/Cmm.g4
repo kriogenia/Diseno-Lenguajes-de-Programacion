@@ -8,6 +8,7 @@ grammar Cmm;
     import java.util.Stack;
     import ast.*;
     import ast.definitions.*;
+    import ast.sentences.*;
     import ast.types.*;
 }
 
@@ -15,18 +16,43 @@ grammar Cmm;
  *                 DEFINITIONS                     *
  **************************************************/
 
-program returns [Program ast]: {$ast = new Program();}
-    (vardef {$ast.addAll($vardef.ast);}
-        |funcdef)+
+program returns [Program ast]:
+    {   $ast = new Program();   }
+    (vardef
+    {   $ast.addAll($vardef.ast);   }
+    |funcdef
+    {   $ast.add($funcdef.ast); }
+    )+
 	;
 
-vardef returns [List<Definition> ast]: {$ast = new ArrayList<>();}
-    type id1=ID {$ast.add(new VariableDefinition($id1.getLine(), $id1.getCharPositionInLine(), $id1.text, $type.ast));}
-        (',' id2=ID {$ast.add(new VariableDefinition($id2.getLine(), $id2.getCharPositionInLine(), $id2.text, $type.ast));})* ';'
-
+vardef returns [List<Definition> ast]:
+    {   $ast = new ArrayList<>();   }
+    type id1=ID
+    {   $ast.add(new VariableDefinition($id1.getLine(), $id1.getCharPositionInLine(), $id1.text, $type.ast));   }
+    (',' id2=ID
+    {   $ast.add(new VariableDefinition($id2.getLine(), $id2.getCharPositionInLine(), $id2.text, $type.ast));   }
+    )* ';'
     ;
 
-funcdef: (primitiveType|'void') ID '(' (type ID (',' type ID)*)? ')''{' vardef* sentence* '}'
+funcdef returns [Definition ast]:
+    {   List<VariableDefinition> params = new ArrayList<>();
+        List<Sentence> sentences = new ArrayList<>();       }
+    {   Type rt = null; } (
+    primitiveType
+    {   rt = $primitiveType.ast;    }
+    | voidType
+    {   rt = $voidType.ast; }
+    ) fid=ID '(' (
+    t1=primitiveType id1=ID
+    {   params.add(new VariableDefinition($id1.getLine(), $id1.getCharPositionInLine(), $id1.text, $t1.ast));   }
+    (',' tn=primitiveType idn=ID
+    {   params.add(new VariableDefinition($idn.getLine(), $idn.getCharPositionInLine(), $idn.text, $tn.ast));   }
+    )*)? ')''{' (
+    vardef
+    {   $vardef.ast.forEach(vd -> sentences.add((VariableDefinition)vd));    }
+    )* ( sentence )* '}'
+    {   Type ft = new FunctionType(params, rt);
+        $ast = new FunctionDefinition($start.getLine(), $start.getCharPositionInLine(), $fid.text, ft, sentences);}
     ;
 
 /***************************************************
@@ -53,6 +79,10 @@ primitiveType returns [Type ast]:
     'int' { $ast = IntegerType.getInstance();}
      | 'char' { $ast = CharacterType.getInstance();}
      | 'double' { $ast = RealType.getInstance();}
+    ;
+
+voidType returns [Type ast]:
+    'void' {$ast = VoidType.getInstance();}
     ;
 
 /***************************************************

@@ -8,3 +8,9 @@ struct {
   } s1, s2;
 
 int[2][3] mi23;
+
+void f1(){}
+int f2(int a, char b){}
+char f3(int a) {
+    int b;
+}
