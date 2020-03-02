@@ -8,6 +8,7 @@ grammar Cmm;
     import java.util.Stack;
     import ast.*;
     import ast.definitions.*;
+    import ast.expressions.*;
     import ast.sentences.*;
     import ast.types.*;
 }
@@ -50,7 +51,10 @@ funcdef returns [Definition ast]:
     )*)? ')''{' (
     vardef
     {   $vardef.ast.forEach(vd -> sentences.add((VariableDefinition)vd));    }
-    )* ( sentence )* '}'
+    )* (
+    sentence
+    {   sentences.add($sentence.ast);    }
+    )* '}'
     {   Type ft = new FunctionType(params, rt);
         $ast = new FunctionDefinition($start.getLine(), $start.getCharPositionInLine(), $fid.text, ft, sentences);}
     ;
@@ -89,7 +93,9 @@ voidType returns [Type ast]:
  *                  SENTENCES                      *
  **************************************************/
 
-sentence : funccall ';'
+sentence returns [Sentence ast]:
+    funccall ';'
+    {   $ast = $funccall.ast;   }
     // return
     | 'return' expr ';'
     // while
@@ -108,37 +114,52 @@ sentence : funccall ';'
  *                  EXPRESSIONS                    *
  **************************************************/
 
-expr:
+expr returns [Expression ast]:
     // constants
       INT_CONSTANT
+    {   $ast = new IntegerLiteral($INT_CONSTANT.getLine(), $INT_CONSTANT.getCharPositionInLine(),
+                        LexerHelper.lexemeToInt($INT_CONSTANT.text));}
     | REAL_CONSTANT
     | CHAR_CONSTANT
     // ident
     | ID
     // parenthesis
-    | '(' expr ')'
+    | '('
+    e=expr
+    {   $ast = $e.ast;  }
+    ')'
     // array access
-    | expr '[' expr ']'
+//    | expr '[' expr ']'
     // field access
-    | expr '.' ID
+//    | expr '.' ID
     // cast
     | '(' primitiveType ')' expr
     // unary minus
     | '-' expr
     // arithmetic operations
-    | expr ('*'|'/'|'%') expr
-    | expr ('+'|'-') expr
+//    | expr ('*'|'/'|'%') expr
+//    | expr ('+'|'-') expr
     // comparisons
-    | expr ('>'|'>='|'<'|'<='|'!='|'==') expr
+//    | expr ('>'|'>='|'<'|'<='|'!='|'==') expr
     // negation
     | '!' expr
     // logic operations
-    | expr ('&&'|'||') expr
+//    | expr ('&&'|'||') expr
     // llamadas a funciones
     | funccall
     ;
 
-funccall: ID '(' (expr (',' expr)*)? ')'
+funccall returns [Call ast]:
+    {   List<Expression> params = new ArrayList<>();  }
+    ID '(' (
+    e1=expr
+    {   params.add($e1.ast);    }
+    (','
+    en=expr
+    {   params.add($en.ast);    }
+    )*)? ')'
+    {   $ast = new Call($start.getLine(), $start.getCharPositionInLine(),
+                    new Variable($ID.getLine(), $ID.getCharPositionInLine(), $ID.text), params);}
     ;
 
 /***************************************************

@@ -4,6 +4,7 @@ import ast.AbstractASTNode;
 import ast.expressions.Expression;
 import ast.expressions.Variable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Call extends AbstractASTNode implements Sentence, Expression {
@@ -14,6 +15,7 @@ public class Call extends AbstractASTNode implements Sentence, Expression {
     public Call(int line, int column, Variable function, List<Expression> params) {
         super(line, column);
         this.function = function;
+        this.params = new ArrayList<>();
         this.params.addAll(params);
     }
 }
