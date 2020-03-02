@@ -1,10 +1,19 @@
 grammar Cmm;
 
+/***************************************************
+ *                    HEADER                       *
+ **************************************************/
+
 @header {
+    import java.util.Stack;
     import ast.*;
     import ast.definitions.*;
     import ast.types.*;
 }
+
+/***************************************************
+ *                 DEFINITIONS                     *
+ **************************************************/
 
 program returns [Program ast]: {$ast = new Program();}
     (vardef {$ast.addAll($vardef.ast);}
@@ -17,17 +26,27 @@ vardef returns [List<Definition> ast]: {$ast = new ArrayList<>();}
 
     ;
 
-funcdef: (primitiveType|'void') ID '(' params? ')''{' vardef* sentence* '}'
+funcdef: (primitiveType|'void') ID '(' (type ID (',' type ID)*)? ')''{' vardef* sentence* '}'
     ;
+
+/***************************************************
+ *                    TYPES                        *
+ **************************************************/
 
 type returns [Type ast]:
     // Primitive types
     primitiveType {$ast = $primitiveType.ast;}
     // Struct
-    | 'struct' '{' {List<RecordField> list = new ArrayList<>();}
-        (type ID ';' {list.add(new RecordField($ID.text, $type.ast));})+ '}' {$ast = new RecordType(list);}
+    | ('struct' '{' {List<RecordField> list = new ArrayList<>();}
+        (type ID ';' {list.add(new RecordField($ID.text, $type.ast));})+ '}'
+        {$ast = new RecordType(list);})
     // Array
-    | type ('[' INT_CONSTANT ']' )+
+    | it=type {Stack<Integer> sizes = new Stack<>();}
+        ('[' INT_CONSTANT ']' {sizes.add(LexerHelper.lexemeToInt($INT_CONSTANT.text) );})+
+        {   $ast = new ArrayType(sizes.pop(), $it.ast);
+            while (!sizes.isEmpty())
+                $ast = new ArrayType(sizes.pop(), $ast);
+        }
     ;
 
 primitiveType returns [Type ast]:
@@ -36,11 +55,9 @@ primitiveType returns [Type ast]:
      | 'double' { $ast = RealType.getInstance();}
     ;
 
-params: param (',' param)*
-    ;
-
-param: type ID
-    ;
+/***************************************************
+ *                  SENTENCES                      *
+ **************************************************/
 
 sentence : funccall ';'
     // return
@@ -56,6 +73,10 @@ sentence : funccall ';'
     // assignment
     | expr '=' expr ';'
     ;
+
+/***************************************************
+ *                  EXPRESSIONS                    *
+ **************************************************/
 
 expr:
     // constants
@@ -90,7 +111,9 @@ expr:
 funccall: ID '(' (expr (',' expr)*)? ')'
     ;
 
-///////////////////////////////////////////////////
+/***************************************************
+ *                    LEXER                       *
+ **************************************************/
 
 fragment
 LETTER: [a-zA-Z]

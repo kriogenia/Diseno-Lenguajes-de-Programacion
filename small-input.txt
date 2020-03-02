@@ -1,8 +1,10 @@
-int a, b;
-char c, d;
-double e, f;
+int i;
+char c;
+double d;
 
 struct {
     int integer;
     char character;
-  } pair, pair2;
+  } s1, s2;
+
+int[2][3] mi23;
