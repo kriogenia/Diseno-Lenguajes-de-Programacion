@@ -1,3 +1,3 @@
-int a;
-char b;
-double c;
+int a, b;
+char c, d;
+double e, f;

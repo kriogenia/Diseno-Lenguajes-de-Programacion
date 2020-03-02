@@ -8,8 +8,8 @@ public class RecordField extends AbstractDefinition {
     private Type type;
     private int scope;
 
-    public RecordField(int line, int column, String name, Type type) {
-        super(line, column, name, type);
+    public RecordField(String name, Type type) {
+        super(0, 0, name, type);
     }
 
     public RecordField(int line, int column, String name, Type type, int scope) {

@@ -4,7 +4,15 @@ import ast.AbstractASTNode;
 
 public class CharacterType extends AbstractASTNode implements Type {
 
-    public CharacterType(int line, int column) {
-        super(line, column);
+    private static CharacterType instance;
+
+    private CharacterType() {
+        super(0, 0);
+    }
+
+    public static CharacterType getInstance() {
+        if (instance == null)
+            instance = new CharacterType();
+        return instance;
     }
 }

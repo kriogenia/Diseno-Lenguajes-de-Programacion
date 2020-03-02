@@ -4,7 +4,15 @@ import ast.AbstractASTNode;
 
 public class VoidType extends AbstractASTNode implements Type {
 
-    public VoidType(int line, int column) {
-        super(line, column);
+    private static VoidType instance;
+
+    private VoidType() {
+        super(0, 0);
+    }
+
+    public static VoidType getInstance() {
+        if (instance == null)
+            instance = new VoidType();
+        return instance;
     }
 }

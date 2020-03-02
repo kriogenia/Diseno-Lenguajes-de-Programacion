@@ -13,8 +13,11 @@ program returns [Program ast]: {$ast = new Program();}
 
 vardef returns [List<Definition> ast]: {$ast = new ArrayList<>();}
     type id1=ID {$ast.add(new VariableDefinition($id1.getLine(), $id1.getCharPositionInLine(), $id1.text, $type.ast));}
-        (',' id2=ID {$ast.add(new VariableDefinition($id1.getLine(), $id1.getCharPositionInLine(), $id2.text, $type.ast));})* ';'
+        (',' id2=ID {$ast.add(new VariableDefinition($id2.getLine(), $id2.getCharPositionInLine(), $id2.text, $type.ast));})* ';'
 
+    ;
+
+funcdef: (primitiveType|'void') ID '(' params? ')''{' vardef* sentence* '}'
     ;
 
 type returns [Type ast]:
@@ -22,17 +25,15 @@ type returns [Type ast]:
     primitiveType {$ast = $primitiveType.ast;}
     // Struct
     | 'struct' '{' {List<RecordField> list = new ArrayList<>();}
-        (type ID ';' {list.add(new RecordField(0,0, $ID.text, $type.ast));})+ '}' {$ast = new RecordType(0,0,list);}
+        (type ID ';' {list.add(new RecordField($ID.text, $type.ast));})+ '}' {$ast = new RecordType(list);}
     // Array
     | type ('[' INT_CONSTANT ']' )+
-;
-primitiveType returns [Type ast]:
-    'int' { $ast = new IntegerType(0,0);}
-     | 'char' { $ast = new CharacterType(0,0);}
-     | 'double' { $ast = new RealType(0,0);}
     ;
 
-funcdef: (primitiveType|'void') ID '(' params? ')''{' vardef* sentence* '}'
+primitiveType returns [Type ast]:
+    'int' { $ast = IntegerType.getInstance();}
+     | 'char' { $ast = CharacterType.getInstance();}
+     | 'double' { $ast = RealType.getInstance();}
     ;
 
 params: param (',' param)*
