@@ -107,7 +107,8 @@ sentence returns [Sentence ast]:
     // read
     | 'read' expr (',' expr)* ';'
     // assignment
-    | expr '=' expr ';'
+    | ei=expr '=' er=expr ';'
+    {   $ast = new Assign($start.getLine(), $start.getCharPositionInLine(), $ei.ast, $er.ast);    }
     ;
 
 /***************************************************
@@ -117,36 +118,49 @@ sentence returns [Sentence ast]:
 expr returns [Expression ast]:
     // constants
       INT_CONSTANT
-    {   $ast = new IntegerLiteral($INT_CONSTANT.getLine(), $INT_CONSTANT.getCharPositionInLine(),
-                        LexerHelper.lexemeToInt($INT_CONSTANT.text));}
+    {   $ast = new IntegerLiteral($start.getLine(), $start.getCharPositionInLine(),
+                        LexerHelper.lexemeToInt($INT_CONSTANT.text));   }
     | REAL_CONSTANT
+    {   $ast = new RealLiteral($start.getLine(), $start.getCharPositionInLine(),
+                        LexerHelper.lexemeToReal($REAL_CONSTANT.text)); }
     | CHAR_CONSTANT
+    {   $ast = new CharacterLiteral($start.getLine(), $start.getCharPositionInLine(),
+                        LexerHelper.lexemeToChar($CHAR_CONSTANT.text)); }
     // ident
     | ID
+    {   $ast = new Variable($start.getLine(), $start.getCharPositionInLine(), $ID.text);  }
     // parenthesis
-    | '('
-    e=expr
+    | '(' e=expr ')'
     {   $ast = $e.ast;  }
-    ')'
     // array access
-//    | expr '[' expr ']'
+    | el=expr '[' er=expr ']'
+    {   $ast = new ArrayAccess($start.getLine(), $start.getCharPositionInLine(), $el.ast, $er.ast);   }
     // field access
-//    | expr '.' ID
+    | e=expr '.' ID
+    {   $ast = new FieldAccess($start.getLine(), $start.getCharPositionInLine(), $ID.text, $e.ast); }
     // cast
-    | '(' primitiveType ')' expr
+    | '(' primitiveType ')' e=expr
+    {   $ast = new Cast($start.getLine(), $start.getCharPositionInLine(), $e.ast, $primitiveType.ast);  }
     // unary minus
-    | '-' expr
+    | '-' e=expr
+    {   $ast = new UnaryMinusOperation($start.getLine(), $start.getCharPositionInLine(), $e.ast);   }
     // arithmetic operations
-//    | expr ('*'|'/'|'%') expr
-//    | expr ('+'|'-') expr
+    | el=expr op=('*'|'/'|'%') er=expr
+    {   $ast = new ArithmeticOperation($start.getLine(), $start.getCharPositionInLine(), $el.ast, $op.text, $er.ast); }
+    | el=expr op=('+'|'-') er=expr
+    {   $ast = new ArithmeticOperation($start.getLine(), $start.getCharPositionInLine(), $el.ast, $op.text, $er.ast); }
     // comparisons
-//    | expr ('>'|'>='|'<'|'<='|'!='|'==') expr
+    | el=expr op=('>'|'>='|'<'|'<='|'!='|'==') er=expr
+    {   $ast = new LogicalOperation($start.getLine(), $start.getCharPositionInLine(), $el.ast, $op.text, $er.ast); }
     // negation
-    | '!' expr
+    | '!' e=expr
+    {   $ast = new LogicalNotOperation($start.getLine(), $start.getCharPositionInLine(), $e.ast);   }
     // logic operations
-//    | expr ('&&'|'||') expr
+    | el=expr op=('&&'|'||') er=expr
+    {   $ast = new ComparisonOperation($start.getLine(), $start.getCharPositionInLine(), $el.ast, $op.text, $er.ast); }
     // llamadas a funciones
     | funccall
+    {   $ast = $funccall.ast;   }
     ;
 
 funccall returns [Call ast]:

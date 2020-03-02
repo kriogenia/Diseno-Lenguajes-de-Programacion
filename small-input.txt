@@ -12,5 +12,19 @@ int[2][3] mi23;
 void f1(){}
 int f2(int a, char b) {
     f1();
-    f2(1);
+    f2(1,'a',a);
+    a = 1;
+    b = 1.1;
+    c = 'a';
+    d = a;
+    e = (d);
+    f = e[d];
+    g = f.e;
+    h = (int)g;
+    i = h*g;
+    j = i+i;
+    k = j>i;
+    l = !k;
+    m = k && l;
+    n = f3();
 }
