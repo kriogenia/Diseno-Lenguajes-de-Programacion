@@ -15,4 +15,9 @@ public class CharacterType extends AbstractASTNode implements Type {
             instance = new CharacterType();
         return instance;
     }
+
+    @Override
+    public String toString() {
+        return "CharacterType";
+    }
 }

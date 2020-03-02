@@ -15,7 +15,14 @@ public class Call extends AbstractASTNode implements Sentence, Expression {
     public Call(int line, int column, Variable function, List<Expression> params) {
         super(line, column);
         this.function = function;
-        this.params = new ArrayList<>();
-        this.params.addAll(params);
+        this.params = params;
+    }
+
+    @Override
+    public String toString() {
+        return "Call{" +
+                "function=" + function +
+                ", params=" + params.size() +
+                '}';
     }
 }

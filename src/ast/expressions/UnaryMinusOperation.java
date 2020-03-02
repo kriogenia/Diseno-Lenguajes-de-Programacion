@@ -11,4 +11,10 @@ public class UnaryMinusOperation extends AbstractASTNode implements Expression{
         this.expression = expression;
     }
 
+    @Override
+    public String toString() {
+        return "UnaryMinusOperation{" +
+                "-" + expression +
+                '}';
+    }
 }

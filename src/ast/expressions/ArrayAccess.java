@@ -12,4 +12,10 @@ public class ArrayAccess extends AbstractASTNode implements Expression{
         this.left = left;
         this.right = right;
     }
+
+    @Override
+    public String toString() {
+        return "ArrayAccess{" + left +
+                "[" + right + "]}";
+    }
 }

@@ -11,4 +11,11 @@ public class Return extends AbstractASTNode implements Sentence {
         super(line, column);
         this.returnValue = returnValue;
     }
+
+    @Override
+    public String toString() {
+        return "Return{" +
+                "returnValue=" + returnValue +
+                '}';
+    }
 }

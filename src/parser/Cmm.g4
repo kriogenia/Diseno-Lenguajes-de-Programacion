@@ -98,14 +98,48 @@ sentence returns [Sentence ast]:
     {   $ast = $funccall.ast;   }
     // return
     | 'return' expr ';'
+    {   $ast = new Return($start.getLine(), $start.getCharPositionInLine(), $expr.ast);}
     // while
-    | 'while' '(' expr ')' '{' sentence* '}'
+    | {   List<Sentence> sentences = new ArrayList<>();   }
+    'while' '(' expr ')' '{' (
+    s=sentence
+    {   sentences.add($s.ast);  }
+    )* '}'
+    {   $ast = new While($start.getLine(), $start.getCharPositionInLine(), $expr.ast,
+            sentences);}
     // if
-    | 'if' '(' expr ')' (sentence|'{'sentence*'}') ('else' (sentence|'{'sentence*'}'))?
+    | { List<Sentence> then = new ArrayList<>();
+        List<Sentence> _else = new ArrayList<>();   }
+    'if' '(' expr ')' (
+    t=sentence
+    {   then.add($t.ast);   }
+    |'{'(
+    tn=sentence
+    {   then.add($tn.ast);   }
+    )*'}') ('else' (
+    e=sentence
+    {   _else.add($e.ast);   }
+    |'{'(
+    en=sentence
+    {   _else.add($en.ast);   }
+    )*'}'))?
+    {   $ast = new If($start.getLine(), $start.getCharPositionInLine(), $expr.ast, then, _else);}
     // write
-    | 'write' expr (',' expr)* ';'
+    | { List<Expression> exprs = new ArrayList<>();    }
+    'write' e1=expr
+    {   exprs.add($e1.ast);    }
+    (',' e2=expr
+    {   exprs.add($e2.ast);    }
+    )* ';'
+    {   $ast = new Write($start.getLine(), $start.getCharPositionInLine(), exprs); }
     // read
-    | 'read' expr (',' expr)* ';'
+    | { List<Expression> exprs = new ArrayList<>();    }
+    'read' e1=expr
+    {   exprs.add($e1.ast);    }
+    (',' e2=expr
+    {   exprs.add($e2.ast);    }
+    )* ';'
+    {   $ast = new Read($start.getLine(), $start.getCharPositionInLine(), exprs); }
     // assignment
     | ei=expr '=' er=expr ';'
     {   $ast = new Assign($start.getLine(), $start.getCharPositionInLine(), $ei.ast, $er.ast);    }

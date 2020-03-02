@@ -13,4 +13,11 @@ public class Cast extends AbstractASTNode implements Expression{
         this.expression = expression;
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "Cast{" +
+                "(" + type + ")" + expression +
+                '}';
+    }
 }

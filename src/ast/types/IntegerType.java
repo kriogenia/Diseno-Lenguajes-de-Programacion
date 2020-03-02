@@ -15,4 +15,9 @@ public class IntegerType extends AbstractASTNode implements Type {
             instance = new IntegerType();
         return instance;
     }
+
+    @Override
+    public String toString() {
+        return "IntegerType";
+    }
 }

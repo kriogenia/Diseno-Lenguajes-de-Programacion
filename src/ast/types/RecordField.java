@@ -14,4 +14,11 @@ public class RecordField extends AbstractDefinition {
         this(name, type);
         this.scope = scope;
     }
+
+    @Override
+    public String toString() {
+        return "RecordField{" +
+                "scope=" + scope +
+                '}';
+    }
 }

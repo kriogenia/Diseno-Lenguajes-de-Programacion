@@ -13,18 +13,20 @@ void f1(){}
 int f2(int a, char b) {
     f1();
     f2(1,'a',a);
-    a = 1;
-    b = 1.1;
-    c = 'a';
-    d = a;
-    e = (d);
-    f = e[d];
-    g = f.e;
-    h = (int)g;
+    while (a + 1) {
+        b = 1.1;
+    }
+    if (c == 'a') {
+        d = a;
+    } else {
+        e = (d);
+    }
+    write e[d], f.e;
+    read (int)g;
     i = h*g;
     j = i+i;
     k = j>i;
     l = !k;
     m = k && l;
-    n = f3();
+    return f3();
 }

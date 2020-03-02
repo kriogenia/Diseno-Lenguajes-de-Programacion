@@ -14,7 +14,16 @@ public class If extends AbstractASTNode implements Sentence {
     public If(int line, int column, Expression condition, List<Sentence> then, List<Sentence> _else) {
         super(line, column);
         this.condition = condition;
-        this.then.addAll(then);
-        this._else.addAll(_else);
+        this.then = then;
+        this._else = _else;
+    }
+
+    @Override
+    public String toString() {
+        return "If{" +
+                "condition=" + condition +
+                ", then=" + then.size() +
+                ", _else=" + _else.size() +
+                '}';
     }
 }

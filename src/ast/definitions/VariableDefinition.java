@@ -18,4 +18,12 @@ public class VariableDefinition extends AbstractDefinition implements Sentence {
         this.scope = scope;
         this.offset = offset;
     }
+
+    @Override
+    public String toString() {
+        return "VariableDefinition{" +
+                "name='" + name + '\'' +
+                ", type=" + type +
+                '}';
+    }
 }

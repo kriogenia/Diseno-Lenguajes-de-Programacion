@@ -8,10 +8,17 @@ public class AbstractBinarialOperation extends AbstractASTNode implements Expres
     private Expression left;
     private Expression right;
 
-    public AbstractBinarialOperation(int line, int column, Expression left, String operation, Expression right) {
+    AbstractBinarialOperation(int line, int column, Expression left, String operation, Expression right) {
         super(line, column);
         this.left = left;
         this.operation = operation;
         this.right = right;
+    }
+
+    @Override
+    public String toString() {
+        return "BinarialOperation{" +
+                left + operation + right +
+                '}';
     }
 }

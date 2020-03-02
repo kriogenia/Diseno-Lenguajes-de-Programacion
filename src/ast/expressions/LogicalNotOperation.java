@@ -10,4 +10,11 @@ public class LogicalNotOperation extends AbstractASTNode implements Expression {
         super(line, column);
         this.expression = expression;
     }
+
+    @Override
+    public String toString() {
+        return "LogicalNotOperation{" +
+                "!" + expression +
+                '}';
+    }
 }

@@ -15,4 +15,9 @@ public class RealType extends AbstractASTNode implements Type {
            instance = new RealType();
        return instance;
    }
+
+    @Override
+    public String toString() {
+        return "RealType";
+    }
 }

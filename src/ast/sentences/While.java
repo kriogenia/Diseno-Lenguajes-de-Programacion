@@ -3,6 +3,7 @@ package ast.sentences;
 import ast.AbstractASTNode;
 import ast.expressions.Expression;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class While extends AbstractASTNode implements Sentence {
@@ -13,6 +14,14 @@ public class While extends AbstractASTNode implements Sentence {
     public While(int line, int column, Expression condition, List<Sentence> _do) {
         super(line, column);
         this.condition = condition;
-        this._do.addAll(_do);
+        this._do = _do;
+    }
+
+    @Override
+    public String toString() {
+        return "While{" +
+                "condition=" + condition +
+                ", _do=" + _do.size() +
+                '}';
     }
 }

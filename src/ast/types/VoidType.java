@@ -15,4 +15,9 @@ public class VoidType extends AbstractASTNode implements Type {
             instance = new VoidType();
         return instance;
     }
+
+    @Override
+    public String toString() {
+        return "VoidType";
+    }
 }

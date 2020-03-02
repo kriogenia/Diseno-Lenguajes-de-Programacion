@@ -12,4 +12,11 @@ public class FieldAccess extends AbstractASTNode implements Expression{
         this.name = name;
         this.expression = expression;
     }
+
+    @Override
+    public String toString() {
+        return "FieldAccess{" + expression +
+                "." + name + '\'' +
+                '}';
+    }
 }

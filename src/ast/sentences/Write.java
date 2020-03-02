@@ -11,6 +11,13 @@ public class Write extends AbstractASTNode implements Sentence {
 
     public Write(int line, int column, List<Expression> expressions) {
         super(line, column);
-        this.expressions= expressions;
+        this.expressions = expressions;
+    }
+
+    @Override
+    public String toString() {
+        return "Write{" +
+                "expressions=" + expressions.size() +
+                '}';
     }
 }

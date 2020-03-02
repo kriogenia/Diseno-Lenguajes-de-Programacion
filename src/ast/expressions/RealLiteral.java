@@ -10,4 +10,11 @@ public class RealLiteral extends AbstractASTNode implements Expression {
         super(line, column);
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return "RealLiteral{" +
+                "value=" + value +
+                '}';
+    }
 }

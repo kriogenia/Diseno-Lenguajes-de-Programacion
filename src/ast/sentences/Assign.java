@@ -13,4 +13,12 @@ public class Assign extends AbstractASTNode implements Sentence {
         this.id = id;
         this.refered = refered;
     }
+
+    @Override
+    public String toString() {
+        return "Assign{" +
+                "id=" + id +
+                ", refered=" + refered +
+                '}';
+    }
 }

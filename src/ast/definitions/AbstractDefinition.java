@@ -5,8 +5,8 @@ import ast.AbstractASTNode;
 
 public class AbstractDefinition extends AbstractASTNode implements Definition {
 
-    private String name;
-    private Type type;
+    String name;
+    Type type;
 
     public AbstractDefinition(int line, int column, String name, Type type) {
         super(line, column);

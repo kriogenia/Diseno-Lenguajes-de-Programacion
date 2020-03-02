@@ -17,4 +17,12 @@ public class FunctionType extends AbstractASTNode implements Type {
         this.params.addAll(params);
         this.returnType = returnType;
     }
+
+    @Override
+    public String toString() {
+        return "FunctionType{" +
+                "params=" + params +
+                ", returnType=" + returnType +
+                '}';
+    }
 }

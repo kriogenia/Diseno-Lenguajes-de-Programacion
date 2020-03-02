@@ -14,4 +14,10 @@ public class RecordType extends AbstractASTNode implements Type {
         this.records = records;
     }
 
+    @Override
+    public String toString() {
+        return "RecordType{" +
+                "records=" + records.size() +
+                '}';
+    }
 }
