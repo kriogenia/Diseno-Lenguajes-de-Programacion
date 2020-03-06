@@ -18,6 +18,8 @@ public class FunctionDefinition extends AbstractDefinition {
     public String toString() {
         return "FunctionDefinition{" +
                 "body=" + body.size() +
+                ", name='" + name + '\'' +
+                ", type=" + type +
                 '}';
     }
 }

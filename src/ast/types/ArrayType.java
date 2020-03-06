@@ -8,8 +8,8 @@ public class ArrayType extends AbstractASTNode implements Type {
     private int size;
     private Type type;
 
-    public ArrayType(int size, Type type) {
-        super(0, 0);
+    public ArrayType(int line, int column, int size, Type type) {
+        super(line, column);
         this.size = size;
         this.type = type;
     }

@@ -51,4 +51,3 @@ void main() {
   f(1, 2.2); // * Invocation as a statement
 }
 
-

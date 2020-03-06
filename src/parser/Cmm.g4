@@ -55,7 +55,7 @@ funcdef returns [Definition ast]:
     sentence
     {   sentences.add($sentence.ast);    }
     )* '}'
-    {   Type ft = new FunctionType(params, rt);
+    {   Type ft = new FunctionType($start.getLine(), $start.getCharPositionInLine(), params, rt);
         $ast = new FunctionDefinition($start.getLine(), $start.getCharPositionInLine(), $fid.text, ft, sentences);}
     ;
 
@@ -68,14 +68,14 @@ type returns [Type ast]:
     primitiveType {$ast = $primitiveType.ast;}
     // Struct
     | ('struct' '{' {List<RecordField> list = new ArrayList<>();}
-        (type ID ';' {list.add(new RecordField($ID.text, $type.ast));})+ '}'
-        {$ast = new RecordType(list);})
+        (type ID ';' {list.add(new RecordField($ID.getLine(), $ID.getCharPositionInLine(), $ID.text, $type.ast));})+ '}'
+        {$ast = new RecordType($start.getLine(), $start.getCharPositionInLine(), list);})
     // Array
     | it=type {Stack<Integer> sizes = new Stack<>();}
         ('[' INT_CONSTANT ']' {sizes.add(LexerHelper.lexemeToInt($INT_CONSTANT.text) );})+
-        {   $ast = new ArrayType(sizes.pop(), $it.ast);
+        {   $ast = new ArrayType($start.getLine(), $start.getCharPositionInLine(), sizes.pop(), $it.ast);
             while (!sizes.isEmpty())
-                $ast = new ArrayType(sizes.pop(), $ast);
+                $ast = new ArrayType($start.getLine(), $start.getCharPositionInLine(), sizes.pop(), $ast);
         }
     ;
 

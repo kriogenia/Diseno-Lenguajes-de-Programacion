@@ -391,7 +391,7 @@ public class CmmParser extends Parser {
 			}
 			setState(88);
 			match(T__5);
-			   Type ft = new FunctionType(params, rt);
+			   Type ft = new FunctionType(_localctx.start.getLine(), _localctx.start.getCharPositionInLine(), params, rt);
 			        ((FuncdefContext)_localctx).ast =  new FunctionDefinition(_localctx.start.getLine(), _localctx.start.getCharPositionInLine(), (((FuncdefContext)_localctx).fid!=null?((FuncdefContext)_localctx).fid.getText():null), ft, sentences);
 			}
 		}
@@ -484,7 +484,7 @@ public class CmmParser extends Parser {
 					((TypeContext)_localctx).ID = match(ID);
 					setState(100);
 					match(T__1);
-					list.add(new RecordField((((TypeContext)_localctx).ID!=null?((TypeContext)_localctx).ID.getText():null), ((TypeContext)_localctx).type.ast));
+					list.add(new RecordField(((TypeContext)_localctx).ID.getLine(), ((TypeContext)_localctx).ID.getCharPositionInLine(), (((TypeContext)_localctx).ID!=null?((TypeContext)_localctx).ID.getText():null), ((TypeContext)_localctx).type.ast));
 					}
 					}
 					setState(105); 
@@ -493,7 +493,7 @@ public class CmmParser extends Parser {
 				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__6) | (1L << T__9) | (1L << T__10) | (1L << T__11))) != 0) );
 				setState(107);
 				match(T__5);
-				((TypeContext)_localctx).ast =  new RecordType(list);
+				((TypeContext)_localctx).ast =  new RecordType(_localctx.start.getLine(), _localctx.start.getCharPositionInLine(), list);
 				}
 				}
 				break;
@@ -542,9 +542,9 @@ public class CmmParser extends Parser {
 						_errHandler.sync(this);
 						_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
 					} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
-					   ((TypeContext)_localctx).ast =  new ArrayType(sizes.pop(), ((TypeContext)_localctx).it.ast);
+					   ((TypeContext)_localctx).ast =  new ArrayType(_localctx.start.getLine(), _localctx.start.getCharPositionInLine(), sizes.pop(), ((TypeContext)_localctx).it.ast);
 					                      while (!sizes.isEmpty())
-					                          ((TypeContext)_localctx).ast =  new ArrayType(sizes.pop(), _localctx.ast);
+					                          ((TypeContext)_localctx).ast =  new ArrayType(_localctx.start.getLine(), _localctx.start.getCharPositionInLine(), sizes.pop(), _localctx.ast);
 					                  
 					}
 					} 
