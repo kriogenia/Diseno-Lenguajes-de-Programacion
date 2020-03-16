@@ -3,7 +3,7 @@ package ast.definitions;
 import ast.types.Type;
 import ast.AbstractASTNode;
 
-public class AbstractDefinition extends AbstractASTNode implements Definition {
+public abstract class AbstractDefinition extends AbstractASTNode implements Definition {
 
     String name;
     Type type;

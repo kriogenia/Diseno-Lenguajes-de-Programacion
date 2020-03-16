@@ -27,7 +27,7 @@ public class ErrorHandler {
     }
 
     public void showErrors(PrintStream out) {
-        errors.forEach(x -> out.println(x));
+        errors.forEach(out::println);
     }
 
     public void addError(ErrorType error) {

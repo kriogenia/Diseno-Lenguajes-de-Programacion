@@ -9,7 +9,7 @@ public class ComparisonOperation extends AbstractBinarialOperation {
     }
 
     @Override
-    public Object accept(Visitor visitor, Object param) {
-        return visitor.visit(this, param);
+    public Object accept(Visitor visitor, Object params) {
+        return visitor.visit(this, params);
     }
 }

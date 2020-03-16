@@ -1,5 +1,6 @@
 package visitor;
 
+import ast.Program;
 import ast.definitions.*;
 import ast.expressions.*;
 import ast.sentences.*;
@@ -7,41 +8,44 @@ import ast.types.*;
 
 public interface Visitor {
 
+	Object visit(Program element, Object params);
+
 	// Definitions
-	Object visit(FunctionDefinition element, Object buffer);
-	Object visit(VariableDefinition element, Object buffer);
+	Object visit(FunctionDefinition element, Object params);
+	Object visit(VariableDefinition element, Object params);
 
 	// Expression
-	Object visit(ArithmeticOperation element, Object buffer);
-	Object visit(ArrayAccess element, Object buffer);
-	Object visit(Cast element, Object buffer);
-	Object visit(CharacterLiteral element, Object buffer);
-	Object visit(ComparisonOperation element, Object buffer);
-	Object visit(FieldAccess element, Object buffer);
-	Object visit(IntegerLiteral element, Object buffer);
-	Object visit(LogicalNotOperation element, Object buffer);
-	Object visit(LogicalOperation element, Object buffer);
-	Object visit(RealLiteral element, Object buffer);
-	Object visit(UnaryMinusOperation element, Object buffer);
-	Object visit(Variable element, Object buffer);
+	Object visit(ArithmeticOperation element, Object params);
+	Object visit(ArrayAccess element, Object params);
+	Object visit(Cast element, Object params);
+	Object visit(CharacterLiteral element, Object params);
+	Object visit(ComparisonOperation element, Object params);
+	Object visit(FieldAccess element, Object params);
+	Object visit(IntegerLiteral element, Object params);
+	Object visit(LogicalNotOperation element, Object params);
+	Object visit(LogicalOperation element, Object params);
+	Object visit(RealLiteral element, Object params);
+	Object visit(UnaryMinusOperation element, Object params);
+	Object visit(Variable element, Object params);
 
 	// Sentences
-	Object visit(Assign element, Object buffer);
-	Object visit(Call element, Object buffer);
-	Object visit(If element, Object buffer);
-	Object visit(Read element, Object buffer);
-	Object visit(Return element, Object buffer);
-	Object visit(While element, Object buffer);
-	Object visit(Write element, Object buffer);
+	Object visit(Assign element, Object params);
+	Object visit(Call element, Object params);
+	Object visit(If element, Object params);
+	Object visit(Read element, Object params);
+	Object visit(Return element, Object params);
+	Object visit(While element, Object params);
+	Object visit(Write element, Object params);
 
 	// Types
-	Object visit(ArrayType element, Object buffer);
-	Object visit(CharacterType element, Object buffer);
-	Object visit(FunctionType element, Object buffer);
-	Object visit(IntegerType element, Object buffer);
-	Object visit(RealType element, Object buffer);
-	Object visit(RecordField element, Object buffer);
-	Object visit(RecordType element, Object buffer);
-	Object visit(VoidType element, Object buffer);
+	Object visit(ArrayType element, Object params);
+	Object visit(CharacterType element, Object params);
+	Object visit(ErrorType errorType, Object params);
+	Object visit(FunctionType element, Object params);
+	Object visit(IntegerType element, Object params);
+	Object visit(RealType element, Object params);
+	Object visit(RecordField element, Object params);
+	Object visit(RecordType element, Object params);
+	Object visit(VoidType element, Object params);
 
 }
