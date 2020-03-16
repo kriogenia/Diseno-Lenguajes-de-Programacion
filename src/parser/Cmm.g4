@@ -23,7 +23,7 @@ program returns [Program ast]:
     {   $ast.addAll($vardef.ast);   }
     |funcdef
     {   $ast.add($funcdef.ast); }
-    )+
+    )+ EOF
 	;
 
 vardef returns [List<Definition> ast]:
@@ -185,13 +185,13 @@ expr returns [Expression ast]:
     {   $ast = new ArithmeticOperation($start.getLine(), $start.getCharPositionInLine(), $el.ast, $op.text, $er.ast); }
     // comparisons
     | el=expr op=('>'|'>='|'<'|'<='|'!='|'==') er=expr
-    {   $ast = new LogicalOperation($start.getLine(), $start.getCharPositionInLine(), $el.ast, $op.text, $er.ast); }
+    {   $ast = new ComparisonOperation($start.getLine(), $start.getCharPositionInLine(), $el.ast, $op.text, $er.ast); }
     // negation
     | '!' e=expr
     {   $ast = new LogicalNotOperation($start.getLine(), $start.getCharPositionInLine(), $e.ast);   }
     // logic operations
     | el=expr op=('&&'|'||') er=expr
-    {   $ast = new ComparisonOperation($start.getLine(), $start.getCharPositionInLine(), $el.ast, $op.text, $er.ast); }
+    {   $ast = new LogicalOperation($start.getLine(), $start.getCharPositionInLine(), $el.ast, $op.text, $er.ast); }
     // llamadas a funciones
     | funccall
     {   $ast = $funccall.ast;   }
