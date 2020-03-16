@@ -15,6 +15,10 @@ public class FunctionDefinition extends AbstractDefinition {
         this.body = body;
     }
 
+    public List<Sentence> getBody() {
+        return body;
+    }
+
     @Override
     public Object accept(Visitor visitor, Object params) {
         return visitor.visit(this, params);

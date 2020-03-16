@@ -19,6 +19,14 @@ public class FunctionType extends AbstractASTNode implements Type {
         this.returnType = returnType;
     }
 
+    public List<VariableDefinition> getParams() {
+        return params;
+    }
+
+    public Type getReturnType() {
+        return returnType;
+    }
+
     @Override
     public Object accept(Visitor visitor, Object params) {
         return visitor.visit(this, params);

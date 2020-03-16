@@ -18,6 +18,14 @@ public class While extends AbstractASTNode implements Sentence {
         this._do = _do;
     }
 
+    public Expression getCondition() {
+        return condition;
+    }
+
+    public List<Sentence> get_do() {
+        return _do;
+    }
+
     @Override
     public Object accept(Visitor visitor, Object params) {
         return visitor.visit(this, params);

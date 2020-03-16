@@ -4,6 +4,8 @@ import parser.*;
 
 import org.antlr.v4.runtime.*;
 import ast.*;
+import visitor.Visitor;
+import visitor.semanthic.LValueVisitor;
 
 public class Main {
 	
@@ -22,8 +24,12 @@ public class Main {
 		CmmParser parser = new CmmParser(tokens);	
 		Program p = parser.program().ast;
 
-		IntrospectorModel model = new IntrospectorModel("Program", p);
-		new IntrospectorTree("Tree", model);
+		Visitor visitor = new LValueVisitor();
+		p.accept(visitor, null);
+		ErrorHandler.getInstance().showErrors(System.out);
+
+		//IntrospectorModel model = new IntrospectorModel("Program", p);
+		//new IntrospectorTree("Tree", model);
 	}
 	
 

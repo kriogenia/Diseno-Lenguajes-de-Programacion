@@ -13,6 +13,10 @@ public class Return extends AbstractASTNode implements Sentence {
         this.returnValue = returnValue;
     }
 
+    public Expression getReturnValue() {
+        return returnValue;
+    }
+
     @Override
     public Object accept(Visitor visitor, Object params) {
         return visitor.visit(this, params);

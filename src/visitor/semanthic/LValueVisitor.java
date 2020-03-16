@@ -1,22 +1,39 @@
 package visitor.semanthic;
 
+import ast.ErrorHandler;
 import ast.expressions.*;
 import ast.sentences.Assign;
 import ast.sentences.Call;
+import ast.sentences.Read;
 import ast.types.ErrorType;
 import visitor.AbstractVisitor;
 
 public class LValueVisitor extends AbstractVisitor {
+
+	// Assign ---------------------------------------------------------
 
 	@Override
 	public Object visit(Assign element, Object params) {
 		element.getId().accept(this, params);
 		// Checks the left side of the assignation is valid
 		if(!element.getId().getLValue())
-			new ErrorType(element.getLine(),element.getColumn(),
-					"ERROR (Invalid Assignation): unexpected token at the left of the assignation");
+			ErrorHandler.getInstance().addError(new ErrorType(element.getId().getLine(),element.getId().getColumn(),
+					"(Invalid Assignation): unexpected token at the left of the assignation"));
 		// Continues checking the assignation
 		element.getRefered().accept(this, params);
+		return null;
+	}
+
+	// Read ---------------------------------------------------------
+
+	@Override
+	public Object visit(Read element, Object params) {
+		for(Expression e: element.getExpressions()) {
+			e.accept(this, params);
+			if(!e.getLValue())
+				ErrorHandler.getInstance().addError(new ErrorType(e.getLine(),e.getColumn(),
+						"(Invalid Read): supplied tokens should be able to store the input"));
+		}
 		return null;
 	}
 

@@ -19,6 +19,18 @@ public class If extends AbstractASTNode implements Sentence {
         this._else = _else;
     }
 
+    public Expression getCondition() {
+        return condition;
+    }
+
+    public List<Sentence> getThen() {
+        return then;
+    }
+
+    public List<Sentence> get_else() {
+        return _else;
+    }
+
     @Override
     public Object accept(Visitor visitor, Object params) {
         return visitor.visit(this, params);

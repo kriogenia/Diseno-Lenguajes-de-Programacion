@@ -15,6 +15,10 @@ public class RecordType extends AbstractASTNode implements Type {
         this.records = records;
     }
 
+    public List<RecordField> getRecords() {
+        return records;
+    }
+
     @Override
     public Object accept(Visitor visitor, Object params) {
         return visitor.visit(this, params);

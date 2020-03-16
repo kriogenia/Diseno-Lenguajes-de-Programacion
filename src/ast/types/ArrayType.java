@@ -15,6 +15,10 @@ public class ArrayType extends AbstractASTNode implements Type {
         this.type = type;
     }
 
+    public Type getType() {
+        return type;
+    }
+
     @Override
     public Object accept(Visitor visitor, Object params) {
         return visitor.visit(this, params);
