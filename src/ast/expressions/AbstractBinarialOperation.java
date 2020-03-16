@@ -1,9 +1,6 @@
 package ast.expressions;
 
-import ast.AbstractASTNode;
-import visitor.Visitor;
-
-public abstract class AbstractBinarialOperation extends AbstractASTNode implements Expression {
+public abstract class AbstractBinarialOperation extends AbstractExpression {
 
     private String operation;
     private Expression left;
@@ -22,4 +19,5 @@ public abstract class AbstractBinarialOperation extends AbstractASTNode implemen
                 left + operation + right +
                 '}';
     }
+
 }

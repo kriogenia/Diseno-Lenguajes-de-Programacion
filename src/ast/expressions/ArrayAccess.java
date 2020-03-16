@@ -1,9 +1,8 @@
 package ast.expressions;
 
-import ast.AbstractASTNode;
 import visitor.Visitor;
 
-public class ArrayAccess extends AbstractASTNode implements Expression{
+public class ArrayAccess extends AbstractExpression {
 
     private Expression left;
     private Expression right;

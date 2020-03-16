@@ -1,9 +1,8 @@
 package ast.expressions;
 
-import ast.AbstractASTNode;
 import visitor.Visitor;
 
-public class LogicalNotOperation extends AbstractASTNode implements Expression {
+public class LogicalNotOperation extends AbstractExpression {
 
     private Expression expression;
 

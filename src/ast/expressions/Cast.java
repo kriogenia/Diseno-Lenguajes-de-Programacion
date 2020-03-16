@@ -1,10 +1,9 @@
 package ast.expressions;
 
-import ast.AbstractASTNode;
 import ast.types.Type;
 import visitor.Visitor;
 
-public class Cast extends AbstractASTNode implements Expression{
+public class Cast extends AbstractExpression {
 
     private Expression expression;
     private Type type;

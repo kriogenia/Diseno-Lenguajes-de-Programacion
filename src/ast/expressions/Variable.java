@@ -1,9 +1,8 @@
 package ast.expressions;
 
-import ast.AbstractASTNode;
 import visitor.Visitor;
 
-public class Variable extends AbstractASTNode implements Expression {
+public class Variable extends AbstractExpression {
 
     private String name;
 

@@ -8,15 +8,21 @@ import ast.types.*;
 
 public abstract class AbstractVisitor implements Visitor {
 
+	/***************************************************
+	 *                 DEFINITIONS                     *
+	 **************************************************/
+
 	@Override
 	public Object visit(FunctionDefinition element, Object buffer) {
 		return null;
 	}
 
 	@Override
-	public Object visit(VariableDefinition element, Object buffer) {
-		return null;
-	}
+	public Object visit(VariableDefinition element, Object buffer) { return null; }
+
+	/***************************************************
+	 *                  EXPRESSIONS                    *
+	 **************************************************/
 
 	@Override
 	public Object visit(ArithmeticOperation element, Object buffer) {
@@ -78,6 +84,10 @@ public abstract class AbstractVisitor implements Visitor {
 		return null;
 	}
 
+	/***************************************************
+	 *                  SENTENCES                      *
+	 **************************************************/
+
 	@Override
 	public Object visit(Assign element, Object buffer) {
 		return null;
@@ -112,6 +122,10 @@ public abstract class AbstractVisitor implements Visitor {
 	public Object visit(Write element, Object buffer) {
 		return null;
 	}
+
+	/***************************************************
+	 *                    TYPES                        *
+	 **************************************************/
 
 	@Override
 	public Object visit(ArrayType element, Object buffer) {
