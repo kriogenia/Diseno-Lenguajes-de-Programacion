@@ -1,6 +1,7 @@
 package ast.expressions;
 
 import ast.AbstractASTNode;
+import visitor.Visitor;
 
 public class UnaryMinusOperation extends AbstractASTNode implements Expression{
 
@@ -9,6 +10,11 @@ public class UnaryMinusOperation extends AbstractASTNode implements Expression{
     public UnaryMinusOperation(int line, int column, Expression expression) {
         super(line, column);
         this.expression = expression;
+    }
+
+    @Override
+    public Object accept(Visitor visitor, Object param) {
+        return visitor.visit(this, param);
     }
 
     @Override

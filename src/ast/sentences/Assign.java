@@ -2,6 +2,7 @@ package ast.sentences;
 
 import ast.AbstractASTNode;
 import ast.expressions.Expression;
+import visitor.Visitor;
 
 public class Assign extends AbstractASTNode implements Sentence {
 
@@ -12,6 +13,11 @@ public class Assign extends AbstractASTNode implements Sentence {
         super(line, column);
         this.id = id;
         this.refered = refered;
+    }
+
+    @Override
+    public Object accept(Visitor visitor, Object param) {
+        return visitor.visit(this, param);
     }
 
     @Override

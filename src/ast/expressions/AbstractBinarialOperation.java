@@ -1,8 +1,9 @@
 package ast.expressions;
 
 import ast.AbstractASTNode;
+import visitor.Visitor;
 
-public class AbstractBinarialOperation extends AbstractASTNode implements Expression {
+public abstract class AbstractBinarialOperation extends AbstractASTNode implements Expression {
 
     private String operation;
     private Expression left;

@@ -1,6 +1,7 @@
 package ast.expressions;
 
 import ast.AbstractASTNode;
+import visitor.Visitor;
 
 public class Variable extends AbstractASTNode implements Expression {
 
@@ -12,9 +13,15 @@ public class Variable extends AbstractASTNode implements Expression {
     }
 
     @Override
+    public Object accept(Visitor visitor, Object param) {
+        return visitor.visit(this, param);
+    }
+
+    @Override
     public String toString() {
         return "Variable{" +
                 "name='" + name + '\'' +
                 '}';
     }
+
 }

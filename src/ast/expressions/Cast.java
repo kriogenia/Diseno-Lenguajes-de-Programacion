@@ -2,6 +2,7 @@ package ast.expressions;
 
 import ast.AbstractASTNode;
 import ast.types.Type;
+import visitor.Visitor;
 
 public class Cast extends AbstractASTNode implements Expression{
 
@@ -12,6 +13,11 @@ public class Cast extends AbstractASTNode implements Expression{
         super(line, column);
         this.expression = expression;
         this.type = type;
+    }
+
+    @Override
+    public Object accept(Visitor visitor, Object param) {
+        return visitor.visit(this, param);
     }
 
     @Override

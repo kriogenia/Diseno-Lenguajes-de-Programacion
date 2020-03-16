@@ -2,6 +2,7 @@ package ast.sentences;
 
 import ast.AbstractASTNode;
 import ast.expressions.Expression;
+import visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,11 @@ public class While extends AbstractASTNode implements Sentence {
         super(line, column);
         this.condition = condition;
         this._do = _do;
+    }
+
+    @Override
+    public Object accept(Visitor visitor, Object param) {
+        return visitor.visit(this, param);
     }
 
     @Override

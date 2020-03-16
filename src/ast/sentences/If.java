@@ -2,6 +2,7 @@ package ast.sentences;
 
 import ast.AbstractASTNode;
 import ast.expressions.Expression;
+import visitor.Visitor;
 
 import java.util.List;
 
@@ -16,6 +17,11 @@ public class If extends AbstractASTNode implements Sentence {
         this.condition = condition;
         this.then = then;
         this._else = _else;
+    }
+
+    @Override
+    public Object accept(Visitor visitor, Object param) {
+        return visitor.visit(this, param);
     }
 
     @Override

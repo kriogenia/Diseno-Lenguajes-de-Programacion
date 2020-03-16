@@ -1,6 +1,7 @@
 package ast.types;
 
 import ast.AbstractASTNode;
+import visitor.Visitor;
 
 public class RealType extends AbstractASTNode implements Type {
 
@@ -15,6 +16,11 @@ public class RealType extends AbstractASTNode implements Type {
            instance = new RealType();
        return instance;
    }
+
+    @Override
+    public Object accept(Visitor visitor, Object param) {
+        return visitor.visit(this, param);
+    }
 
     @Override
     public String toString() {

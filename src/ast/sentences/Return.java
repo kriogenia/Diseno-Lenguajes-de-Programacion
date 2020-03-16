@@ -2,6 +2,7 @@ package ast.sentences;
 
 import ast.AbstractASTNode;
 import ast.expressions.Expression;
+import visitor.Visitor;
 
 public class Return extends AbstractASTNode implements Sentence {
 
@@ -10,6 +11,11 @@ public class Return extends AbstractASTNode implements Sentence {
     public Return(int line, int column, Expression returnValue) {
         super(line, column);
         this.returnValue = returnValue;
+    }
+
+    @Override
+    public Object accept(Visitor visitor, Object param) {
+        return visitor.visit(this, param);
     }
 
     @Override

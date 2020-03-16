@@ -1,6 +1,7 @@
 package ast.types;
 
 import ast.AbstractASTNode;
+import visitor.Visitor;
 
 public class CharacterType extends AbstractASTNode implements Type {
 
@@ -14,6 +15,11 @@ public class CharacterType extends AbstractASTNode implements Type {
         if (instance == null)
             instance = new CharacterType();
         return instance;
+    }
+
+    @Override
+    public Object accept(Visitor visitor, Object param) {
+        return visitor.visit(this, param);
     }
 
     @Override

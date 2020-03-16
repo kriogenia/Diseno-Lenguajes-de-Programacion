@@ -3,6 +3,7 @@ package ast.definitions;
 import ast.ASTNode;
 import ast.sentences.Sentence;
 import ast.types.Type;
+import visitor.Visitor;
 
 public class VariableDefinition extends AbstractDefinition implements Sentence {
 
@@ -17,6 +18,11 @@ public class VariableDefinition extends AbstractDefinition implements Sentence {
         this(line, column, name, type);
         this.scope = scope;
         this.offset = offset;
+    }
+
+    @Override
+    public Object accept(Visitor visitor, Object param) {
+        return visitor.visit(this, param);
     }
 
     @Override

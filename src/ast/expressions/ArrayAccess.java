@@ -1,6 +1,7 @@
 package ast.expressions;
 
 import ast.AbstractASTNode;
+import visitor.Visitor;
 
 public class ArrayAccess extends AbstractASTNode implements Expression{
 
@@ -11,6 +12,11 @@ public class ArrayAccess extends AbstractASTNode implements Expression{
         super(line, column);
         this.left = left;
         this.right = right;
+    }
+
+    @Override
+    public Object accept(Visitor visitor, Object param) {
+        return visitor.visit(this, param);
     }
 
     @Override
