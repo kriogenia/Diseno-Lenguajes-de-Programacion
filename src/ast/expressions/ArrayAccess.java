@@ -13,6 +13,14 @@ public class ArrayAccess extends AbstractExpression {
         this.right = right;
     }
 
+    public Expression getLeft() {
+        return left;
+    }
+
+    public Expression getRight() {
+        return right;
+    }
+
     @Override
     public Object accept(Visitor visitor, Object param) {
         return visitor.visit(this, param);

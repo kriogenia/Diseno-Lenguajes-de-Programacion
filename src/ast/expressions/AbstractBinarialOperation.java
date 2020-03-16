@@ -13,6 +13,14 @@ public abstract class AbstractBinarialOperation extends AbstractExpression {
         this.right = right;
     }
 
+    public Expression getLeft() {
+        return left;
+    }
+
+    public Expression getRight() {
+        return right;
+    }
+
     @Override
     public String toString() {
         return "BinarialOperation{" +

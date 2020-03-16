@@ -15,6 +15,14 @@ public class Assign extends AbstractASTNode implements Sentence {
         this.refered = refered;
     }
 
+    public Expression getId() {
+        return id;
+    }
+
+    public Expression getRefered() {
+        return refered;
+    }
+
     @Override
     public Object accept(Visitor visitor, Object param) {
         return visitor.visit(this, param);

@@ -13,6 +13,10 @@ public class FieldAccess extends AbstractExpression {
         this.expression = expression;
     }
 
+    public Expression getExpression() {
+        return expression;
+    }
+
     @Override
     public Object accept(Visitor visitor, Object param) {
         return visitor.visit(this, param);
