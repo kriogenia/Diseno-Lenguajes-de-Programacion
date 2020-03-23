@@ -6,17 +6,10 @@ import visitor.Visitor;
 
 public class VariableDefinition extends AbstractDefinition implements Sentence {
 
-    private int scope;
     private int offset;
 
     public VariableDefinition(int line, int column, String name, Type type) {
         super(line, column, name, type);
-    }
-
-    public VariableDefinition(int line, int column, String name, Type type, int scope, int offset) {
-        this(line, column, name, type);
-        this.scope = scope;
-        this.offset = offset;
     }
 
     @Override
@@ -29,6 +22,7 @@ public class VariableDefinition extends AbstractDefinition implements Sentence {
         return "VariableDefinition{" +
                 "name='" + name + '\'' +
                 ", type=" + type +
+                ", scope=" + scope +
                 '}';
     }
 }
