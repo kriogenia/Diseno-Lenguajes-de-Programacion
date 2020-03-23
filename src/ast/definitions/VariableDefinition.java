@@ -1,6 +1,5 @@
 package ast.definitions;
 
-import ast.ASTNode;
 import ast.sentences.Sentence;
 import ast.types.Type;
 import visitor.Visitor;
@@ -21,8 +20,8 @@ public class VariableDefinition extends AbstractDefinition implements Sentence {
     }
 
     @Override
-    public Object accept(Visitor visitor, Object params) {
-        return visitor.visit(this, params);
+    public <P, R> R accept(Visitor<P, R> visitor, P param) {
+        return visitor.visit(this, param);
     }
 
     @Override

@@ -18,4 +18,6 @@ public abstract class AbstractDefinition extends AbstractASTNode implements Defi
 
     public Type getType() { return type; }
 
+    public int getScope() { return 0; }
+
 }

@@ -1,7 +1,6 @@
 package ast.types;
 
 import ast.AbstractASTNode;
-import ast.expressions.IntegerLiteral;
 import visitor.Visitor;
 
 public class ArrayType extends AbstractASTNode implements Type {
@@ -19,10 +18,10 @@ public class ArrayType extends AbstractASTNode implements Type {
         return type;
     }
 
-    @Override
-    public Object accept(Visitor visitor, Object params) {
-        return visitor.visit(this, params);
-    }
+	@Override
+	public <P, R> R accept(Visitor<P, R> visitor, P param) {
+		return visitor.visit(this, param);
+	}
 
     @Override
     public String toString() {

@@ -1,11 +1,12 @@
-import introspector.model.IntrospectorModel;
-import introspector.view.IntrospectorTree;
-import parser.*;
-
-import org.antlr.v4.runtime.*;
-import ast.*;
+import ast.ErrorHandler;
+import ast.Program;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import parser.CmmLexer;
+import parser.CmmParser;
 import visitor.Visitor;
-import visitor.semanthic.LValueVisitor;
+import visitor.semanthic.TypeCheckingVisitor;
 
 public class Main {
 	
@@ -24,7 +25,7 @@ public class Main {
 		CmmParser parser = new CmmParser(tokens);	
 		Program p = parser.program().ast;
 
-		Visitor visitor = new LValueVisitor();
+		Visitor visitor = new TypeCheckingVisitor();
 		p.accept(visitor, null);
 		ErrorHandler.getInstance().showErrors(System.out);
 

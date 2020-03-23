@@ -6,46 +6,46 @@ import ast.expressions.*;
 import ast.sentences.*;
 import ast.types.*;
 
-public interface Visitor {
+public interface Visitor<P,R> {
 
-	Object visit(Program element, Object params);
+	R visit(Program element, P params);
 
 	// Definitions
-	Object visit(FunctionDefinition element, Object params);
-	Object visit(VariableDefinition element, Object params);
+	R visit(FunctionDefinition element, P params);
+	R visit(VariableDefinition element, P params);
 
 	// Expression
-	Object visit(ArithmeticOperation element, Object params);
-	Object visit(ArrayAccess element, Object params);
-	Object visit(Cast element, Object params);
-	Object visit(CharacterLiteral element, Object params);
-	Object visit(ComparisonOperation element, Object params);
-	Object visit(FieldAccess element, Object params);
-	Object visit(IntegerLiteral element, Object params);
-	Object visit(LogicalNotOperation element, Object params);
-	Object visit(LogicalOperation element, Object params);
-	Object visit(RealLiteral element, Object params);
-	Object visit(UnaryMinusOperation element, Object params);
-	Object visit(Variable element, Object params);
+	R visit(ArithmeticOperation element, P params);
+	R visit(ArrayAccess element, P params);
+	R visit(Cast element, P params);
+	R visit(CharacterLiteral element, P params);
+	R visit(ComparisonOperation element, P params);
+	R visit(FieldAccess element, P params);
+	R visit(IntegerLiteral element, P params);
+	R visit(LogicalNotOperation element, P params);
+	R visit(LogicalOperation element, P params);
+	R visit(RealLiteral element, P params);
+	R visit(UnaryMinusOperation element, P params);
+	R visit(Variable element, P params);
 
 	// Sentences
-	Object visit(Assign element, Object params);
-	Object visit(Call element, Object params);
-	Object visit(If element, Object params);
-	Object visit(Read element, Object params);
-	Object visit(Return element, Object params);
-	Object visit(While element, Object params);
-	Object visit(Write element, Object params);
+	R visit(Assign element, P params);
+	R visit(Call element, P params);
+	R visit(If element, P params);
+	R visit(Read element, P params);
+	R visit(Return element, P params);
+	R visit(While element, P params);
+	R visit(Write element, P params);
 
 	// Types
-	Object visit(ArrayType element, Object params);
-	Object visit(CharacterType element, Object params);
-	Object visit(ErrorType errorType, Object params);
-	Object visit(FunctionType element, Object params);
-	Object visit(IntegerType element, Object params);
-	Object visit(RealType element, Object params);
-	Object visit(RecordField element, Object params);
-	Object visit(RecordType element, Object params);
-	Object visit(VoidType element, Object params);
+	R visit(ArrayType element, P params);
+	R visit(CharacterType element, P params);
+	R visit(ErrorType errorType, P params);
+	R visit(FunctionType element, P params);
+	R visit(IntegerType element, P params);
+	R visit(RealType element, P params);
+	R visit(RecordField element, P params);
+	R visit(RecordType element, P params);
+	R visit(VoidType element, P params);
 
 }

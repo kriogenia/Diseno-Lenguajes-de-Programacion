@@ -7,10 +7,10 @@ import ast.expressions.*;
 import ast.sentences.*;
 import ast.types.*;
 
-public abstract class AbstractVisitor implements Visitor {
+public abstract class AbstractVisitor<P,R> implements Visitor<P,R> {
 
 	@Override
-	public Object visit(Program element, Object params) {
+	public R visit(Program element, P params) {
 		element.getDefinitions().forEach(x -> x.accept(this, params));
 		return null;
 	}
@@ -20,86 +20,86 @@ public abstract class AbstractVisitor implements Visitor {
 	 **************************************************/
 
 	@Override
-	public Object visit(FunctionDefinition element, Object params) {
+	public R visit(FunctionDefinition element, P params) {
 		element.getBody().forEach(x -> x.accept(this, params));
 		return null;
 	}
 
 	@Override
-	public Object visit(VariableDefinition element, Object params) { return null; }
+	public R visit(VariableDefinition element, P params) { return null; }
 
 	/***************************************************
 	 *                  EXPRESSIONS                    *
 	 **************************************************/
 
 	@Override
-	public Object visit(ArithmeticOperation element, Object params) {
+	public R visit(ArithmeticOperation element, P params) {
 		element.getLeft().accept(this, params);
 		element.getRight().accept(this, params);
 		return null;
 	}
 
 	@Override
-	public Object visit(ArrayAccess element, Object params) {
+	public R visit(ArrayAccess element, P params) {
 		element.getLeft().accept(this, params);
 		element.getRight().accept(this, params);
 		return null;
 	}
 
 	@Override
-	public Object visit(Cast element, Object params) {
+	public R visit(Cast element, P params) {
 		element.getExpression().accept(this, params);
 		element.getType().accept(this, params);
 		return null;
 	}
 
 	@Override
-	public Object visit(CharacterLiteral element, Object params) { return null;	}
+	public R visit(CharacterLiteral element, P params) { return null;	}
 
 	@Override
-	public Object visit(ComparisonOperation element, Object params) {
+	public R visit(ComparisonOperation element, P params) {
 		element.getLeft().accept(this, params);
 		element.getRight().accept(this, params);
 		return null;
 	}
 
 	@Override
-	public Object visit(FieldAccess element, Object params) {
+	public R visit(FieldAccess element, P params) {
 		element.getExpression().accept(this, params);
 		return null;
 	}
 
 	@Override
-	public Object visit(IntegerLiteral element, Object params) {
+	public R visit(IntegerLiteral element, P params) {
 		return null;
 	}
 
 	@Override
-	public Object visit(LogicalNotOperation element, Object params) {
+	public R visit(LogicalNotOperation element, P params) {
 		element.getExpression().accept(this, params);
 		return null;
 	}
 
 	@Override
-	public Object visit(LogicalOperation element, Object params) {
+	public R visit(LogicalOperation element, P params) {
 		element.getLeft().accept(this, params);
 		element.getRight().accept(this, params);
 		return null;
 	}
 
 	@Override
-	public Object visit(RealLiteral element, Object params) {
+	public R visit(RealLiteral element, P params) {
 		return null;
 	}
 
 	@Override
-	public Object visit(UnaryMinusOperation element, Object params) {
+	public R visit(UnaryMinusOperation element, P params) {
 		element.getExpression().accept(this, params);
 		return null;
 	}
 
 	@Override
-	public Object visit(Variable element, Object params) {
+	public R visit(Variable element, P params) {
 		return null;
 	}
 
@@ -108,21 +108,21 @@ public abstract class AbstractVisitor implements Visitor {
 	 **************************************************/
 
 	@Override
-	public Object visit(Assign element, Object params) {
+	public R visit(Assign element, P params) {
 		element.getId().accept(this, params);
 		element.getRefered().accept(this, params);
 		return null;
 	}
 
 	@Override
-	public Object visit(Call element, Object params) {
+	public R visit(Call element, P params) {
 		element.getFunction().accept(this, params);
 		element.getParams().forEach(x -> x.accept(this, params));
 		return null;
 	}
 
 	@Override
-	public Object visit(If element, Object params) {
+	public R visit(If element, P params) {
 		element.getCondition().accept(this, params);
 		element.getThen().forEach(x -> x.accept(this, params));
 		element.get_else().forEach(x -> x.accept(this, params));
@@ -130,26 +130,26 @@ public abstract class AbstractVisitor implements Visitor {
 	}
 
 	@Override
-	public Object visit(Read element, Object params) {
+	public R visit(Read element, P params) {
 		element.getExpressions().forEach(x -> x.accept(this, params));
 		return null;
 	}
 
 	@Override
-	public Object visit(Return element, Object params) {
+	public R visit(Return element, P params) {
 		element.getReturnValue().accept(this, params);
 		return null;
 	}
 
 	@Override
-	public Object visit(While element, Object params) {
+	public R visit(While element, P params) {
 		element.getCondition().accept(this, params);
 		element.get_do().forEach(x -> x.accept(this, params));
 		return null;
 	}
 
 	@Override
-	public Object visit(Write element, Object params) {
+	public R visit(Write element, P params) {
 		element.getExpressions().forEach(x -> x.accept(this, params));
 		return null;
 	}
@@ -159,52 +159,52 @@ public abstract class AbstractVisitor implements Visitor {
 	 **************************************************/
 
 	@Override
-	public Object visit(ArrayType element, Object params) {
+	public R visit(ArrayType element, P params) {
 		element.getType().accept(this, params);
 		return null;
 	}
 
 	@Override
-	public Object visit(CharacterType element, Object params) {
+	public R visit(CharacterType element, P params) {
 		return null;
 	}
 
 	@Override
-	public Object visit(ErrorType element, Object params) {
+	public R visit(ErrorType element, P params) {
 		return null;
 	}
 
 	@Override
-	public Object visit(FunctionType element, Object params) {
+	public R visit(FunctionType element, P params) {
 		element.getParams().forEach(x -> x.accept(this, params));
 		element.getReturnType().accept(this, params);
 		return null;
 	}
 
 	@Override
-	public Object visit(IntegerType element, Object params) {
+	public R visit(IntegerType element, P params) {
 		return null;
 	}
 
 	@Override
-	public Object visit(RealType element, Object params) {
+	public R visit(RealType element, P params) {
 		return null;
 	}
 
 	@Override
-	public Object visit(RecordField element, Object params) {
+	public R visit(RecordField element, P params) {
 		element.getType().accept(this, params);
 		return null;
 	}
 
 	@Override
-	public Object visit(RecordType element, Object params) {
+	public R visit(RecordType element, P params) {
 		element.getRecords().forEach(x -> x.accept(this, params));
 		return null;
 	}
 
 	@Override
-	public Object visit(VoidType element, Object params) {
+	public R visit(VoidType element, P params) {
 		return null;
 	}
 }

@@ -4,7 +4,6 @@ import ast.AbstractASTNode;
 import ast.expressions.Expression;
 import visitor.Visitor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class While extends AbstractASTNode implements Sentence {
@@ -27,8 +26,8 @@ public class While extends AbstractASTNode implements Sentence {
     }
 
     @Override
-    public Object accept(Visitor visitor, Object params) {
-        return visitor.visit(this, params);
+    public <P, R> R accept(Visitor<P, R> visitor, P param) {
+        return visitor.visit(this, param);
     }
 
     @Override

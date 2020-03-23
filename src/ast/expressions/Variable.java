@@ -1,10 +1,12 @@
 package ast.expressions;
 
+import ast.definitions.Definition;
 import visitor.Visitor;
 
 public class Variable extends AbstractExpression {
 
     private String name;
+    private Definition value;
 
     public Variable(int line, int column, String name) {
         super(line, column);
@@ -12,8 +14,8 @@ public class Variable extends AbstractExpression {
     }
 
     @Override
-    public Object accept(Visitor visitor, Object params) {
-        return visitor.visit(this, params);
+    public <P, R> R accept(Visitor<P, R> visitor, P param) {
+        return visitor.visit(this, param);
     }
 
     @Override

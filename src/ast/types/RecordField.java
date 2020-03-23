@@ -17,8 +17,8 @@ public class RecordField extends AbstractDefinition {
     }
 
     @Override
-    public Object accept(Visitor visitor, Object params) {
-        return visitor.visit(this, params);
+    public <P, R> R accept(Visitor<P, R> visitor, P param) {
+        return visitor.visit(this, param);
     }
 
     @Override
