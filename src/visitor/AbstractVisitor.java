@@ -21,12 +21,16 @@ public abstract class AbstractVisitor<P,R> implements Visitor<P,R> {
 
 	@Override
 	public R visit(FunctionDefinition element, P params) {
+		element.getType().accept(this, params);
 		element.getBody().forEach(x -> x.accept(this, params));
 		return null;
 	}
 
 	@Override
-	public R visit(VariableDefinition element, P params) { return null; }
+	public R visit(VariableDefinition element, P params) {
+		element.getType().accept(this, params);
+		return null;
+	}
 
 	/***************************************************
 	 *                  EXPRESSIONS                    *

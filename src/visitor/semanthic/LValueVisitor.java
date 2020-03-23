@@ -8,7 +8,7 @@ import ast.sentences.Read;
 import ast.types.ErrorType;
 import visitor.AbstractVisitor;
 
-public class TypeCheckingVisitor extends AbstractVisitor<Void,Void> {
+public class LValueVisitor extends AbstractVisitor<Void,Void> {
 
 	// Assign ---------------------------------------------------------
 
