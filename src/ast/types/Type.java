@@ -9,10 +9,12 @@ public interface Type extends ASTNode  {
 
 	String getName();
 
-	boolean isLogical();
+	boolean isNotLogical();
+	boolean isBuiltInType();
 
 	Type arithmetic(ASTNode ast);
 	Type arithmetic(Type type, ASTNode ast);
+	Type cast(Type type, ASTNode ast);
 	Type indexing(Type type, ASTNode ast);
 	Type parenthesis(List<Expression> types, ASTNode ast);
 	Type promotesTo(Type type, ASTNode ast);

@@ -1,0 +1,18 @@
+
+int integer;
+char character;
+double real;
+int[3] a;
+
+void main() {
+  integer = 20;
+  character = (char)integer;
+  real = (double)integer;
+  integer = (int)character;
+  real = (double)character;
+  integer = (int)real;
+  character = (char)real;
+  integer = (int)a;             // * Error 1
+  character = (char)a;          // * Error 2
+  real = (double)a;             // * Error 3
+}

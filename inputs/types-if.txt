@@ -1,0 +1,18 @@
+
+int integer;
+double real;
+
+void main() {
+  integer = 20;
+  if (integer)
+    integer = integer-1;
+  if (real) {               // * Error 1
+    integer = integer-1;
+    real = real-1;          // * Error 2
+  }
+  if (integer+10)
+    integer = integer-1;
+  if ('a') {                // * Error 3
+    integer = integer-1;
+  }
+}

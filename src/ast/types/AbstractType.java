@@ -13,6 +13,14 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
 	}
 
 	@Override
+	public boolean isNotLogical() {
+		return true;
+	}
+
+	@Override
+	public boolean isBuiltInType() { return false; }
+
+	@Override
 	public Type arithmetic(ASTNode ast) {
 		return new ErrorType(ast.getLine(),ast.getColumn(), "(Invalid Operation): You can't substract " +
 				this.getName());
@@ -25,8 +33,11 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
 	}
 
 	@Override
-	public boolean isLogical() {
-		return false;
+	public Type cast(Type type, ASTNode ast) {
+		if (!(this.isBuiltInType() && type.isBuiltInType()))
+			return new ErrorType(ast.getLine(), ast.getColumn(),
+				"(Invalid Cast): " + this.getName() + " can't be cast into " + type.getName());
+		return type;
 	}
 
 	@Override

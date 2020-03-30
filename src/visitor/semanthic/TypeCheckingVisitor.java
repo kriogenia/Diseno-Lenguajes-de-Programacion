@@ -47,13 +47,15 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 		return null;
 	}
 
+	@Override
 	public Void visit(If element, Type params) {
 		super.visit(element, params);
 		// Checks the conditional is logical
-		if (!element.getCondition().getType().isLogical())
+		if (element.getCondition().getType().isNotLogical())
 			ErrorHandler.getInstance().addError(
 					new ErrorType(element.getCondition().getLine(),element.getCondition().getColumn(),
-					element.getCondition().getType().getName() + " is not a logical expression."));
+							"(Invalid Condition): " + element.getCondition().getType().getName() +
+									" is not a logical expression."));
 		return null;
 	}
 
@@ -78,8 +80,17 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 		return null;
 	}
 
-	// While
-	// Write
+	@Override
+	public Void visit(While element, Type params) {
+		super.visit(element, params);
+		// Checks the conditional is logical
+		if (element.getCondition().getType().isNotLogical())
+			ErrorHandler.getInstance().addError(
+					new ErrorType(element.getCondition().getLine(),element.getCondition().getColumn(),
+							"(Invalid Condition): " + element.getCondition().getType().getName() +
+									" is not a logical expression."));
+		return null;
+	}
 
 	/***************************************************
 	 *                  EXPRESSIONS                    *
@@ -105,8 +116,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 	public Void visit(Call element, Type params) {
 		super.visit(element, params);
 		element.setLValue(false);
-		// Checks the parameters match the arguments
 		element.setType(element.getFunction().getType().parenthesis(element.getParams(), element));
+		// Checks the parameters match the arguments
 		if (element.getType() instanceof ErrorType)
 			ErrorHandler.getInstance().addError((ErrorType) (element.getType()));
 		return null;
@@ -116,6 +127,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 	public Void visit(Cast element, Type params) {
 		super.visit(element, params);
 		element.setLValue(false);
+		element.setType(element.getExpression().getType().cast(element.getTypeToCast(), element));
 		return null;
 	}
 

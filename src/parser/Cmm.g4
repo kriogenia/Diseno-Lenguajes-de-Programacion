@@ -101,10 +101,13 @@ sentence returns [Sentence ast]:
     {   $ast = new Return($start.getLine(), $start.getCharPositionInLine(), $expr.ast);}
     // while
     | {   List<Sentence> sentences = new ArrayList<>();   }
-    'while' '(' expr ')' '{' (
+    'while' '(' expr ')' (
     s=sentence
-    {   sentences.add($s.ast);  }
-    )* '}'
+    {   sentences.add($s.ast);   }
+    | '{' (
+    sn=sentence
+    {   sentences.add($sn.ast);  }
+    )* '}')
     {   $ast = new While($start.getLine(), $start.getCharPositionInLine(), $expr.ast,
             sentences);}
     // if

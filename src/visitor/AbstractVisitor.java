@@ -53,7 +53,7 @@ public abstract class AbstractVisitor<P,R> implements Visitor<P,R> {
 	@Override
 	public R visit(Cast element, P params) {
 		element.getExpression().accept(this, params);
-		element.getType().accept(this, params);
+		element.getTypeToCast().accept(this, params);
 		return null;
 	}
 

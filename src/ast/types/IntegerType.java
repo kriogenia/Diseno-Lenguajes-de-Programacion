@@ -23,9 +23,12 @@ public class IntegerType extends AbstractType {
     }
 
     @Override
-    public boolean isLogical() {
-        return true;
+    public boolean isNotLogical() {
+        return false;
     }
+
+    @Override
+    public boolean isBuiltInType() { return true; }
 
     @Override
     public Type arithmetic(Type t, ASTNode ast) {

@@ -23,6 +23,9 @@ public class CharacterType extends AbstractType {
     }
 
     @Override
+    public boolean isBuiltInType() { return true; }
+
+    @Override
     public Type promotesTo(Type type, ASTNode ast) {
         if (type instanceof ErrorType)
             return type;
