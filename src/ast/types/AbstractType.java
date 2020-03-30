@@ -30,10 +30,11 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
 	}
 
 	@Override
-	public Type promotesTo(Type type) {
+	public Type promotesTo(Type type, ASTNode ast) {
 		if (type instanceof ErrorType)
 			return type;
-		return null;
+		return new ErrorType(ast.getLine(), ast.getColumn(),
+				"(Invalid Type): " + type.getName() + " is not of type " + this.getName());
 	}
 
 	@Override

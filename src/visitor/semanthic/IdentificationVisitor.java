@@ -23,7 +23,7 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 	public Void visit(FunctionDefinition element, Void params) {
 		if (!table.insert(element))
 			ErrorHandler.getInstance().addError(new ErrorType(element.getLine(),element.getColumn(),
-					"(Invalid Function Definition): this function is already declared"));
+					"This function is already declared."));
 		// We up the scope
 		table.set();
 		element.getType().accept(this, params);
@@ -38,8 +38,7 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 		super.visit(element, params);
 		if (!table.insert(element))
 			ErrorHandler.getInstance().addError(new ErrorType(element.getLine(),element.getColumn(),
-					"(Invalid Variable Definition): variable " + element.getName() +
-							" is already declared on this scope"));
+					"The variable " + element.getName() + " is already declared on this scope"));
 		return null;
 	}
 
@@ -49,10 +48,10 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 	public Void visit(Variable element, Void params) {
 		Definition definition = table.find(element.getName());
 		if (definition == null)
-			ErrorHandler.getInstance().addError(new ErrorType(element.getLine(),element.getColumn(),
-					"(Invalid Variable): variable " + element.getName() + " is not defined"));
-		else
-			element.setDefinition(definition);
+			definition = new VariableDefinition(element.getLine(), element.getColumn(), element.getName(),
+					new ErrorType(element.getLine(),element.getColumn(),
+					"The variable " + element.getName() + " is not yet defined"));
+		element.setDefinition(definition);
 		return null;
 	}
 

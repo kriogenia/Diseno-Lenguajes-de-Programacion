@@ -4,21 +4,23 @@ import ast.ErrorHandler;
 import ast.definitions.FunctionDefinition;
 import ast.expressions.*;
 import ast.sentences.*;
-import ast.types.ErrorType;
-import ast.types.FunctionType;
-import ast.types.Type;
+import ast.types.*;
 import visitor.AbstractVisitor;
 
 public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 
+	//*********************************************************************
 	// Definitions
+	//*********************************************************************
 
 	@Override
 	public Void visit(FunctionDefinition element, Type params) {
 		return super.visit(element, ((FunctionType) element.getType()).getReturnType());
 	}
 
-	// Statements ---------------------------------------------------------
+	//*********************************************************************
+	// Sentences
+	//*********************************************************************
 
 	@Override
 	public Void visit(Assign element, Type params) {
@@ -27,12 +29,11 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 		if(element.getId().isNotLValue())
 			ErrorHandler.getInstance().addError(
 					new ErrorType(element.getId().getLine(),element.getId().getColumn(),
-					"(Invalid Assignation): unexpected token at the left of the assignation"));
-		// Checks the right side if the correct type
-
-
-
-
+					"(Invalid Assigment): The left side of an assignment should be able to store the value."));
+		// Checks if the right side is the correct type
+		Type promotion = element.getId().getType().promotesTo(element.getRefered().getType(), element);
+		if (promotion instanceof ErrorType)
+			ErrorHandler.getInstance().addError((ErrorType) promotion);
 		return null;
 	}
 
@@ -42,7 +43,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 		if (!element.getCondition().getType().isLogical())
 			ErrorHandler.getInstance().addError(
 					new ErrorType(element.getCondition().getLine(),element.getCondition().getColumn(),
-					"(Invalid Assignation): unexpected token at the left of the assignation"));
+					element.getCondition().getType().getName() + " is not a logical expression."));
 		return null;
 	}
 
@@ -53,7 +54,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 		element.getExpressions().stream().filter(Expression::isNotLValue).forEach(
 				e -> ErrorHandler.getInstance().addError(
 						new ErrorType(e.getLine(),e.getColumn(),
-								"(Invalid Read): supplied tokens should be able to store the input")));
+								"(Invalid Expression): You can't store an input on this token.")));
 		return null;
 	}
 
@@ -61,26 +62,24 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 	public Void visit(Return element, Type params) {
 		super.visit(element, params);
 		// Checks the expression matches the expected return type
-		if (element.getReturnValue().getType().promotesTo(params) == null)
-			ErrorHandler.getInstance().addError(
-					new ErrorType(element.getLine(),element.getColumn(),
-							"(Invalid Return): this function must return " + params.getName()));
-
+		Type promotion = element.getReturnValue().getType().promotesTo(params, element);
+		if (promotion instanceof ErrorType)
+			ErrorHandler.getInstance().addError((ErrorType) promotion);
 		return null;
 	}
 
 	// While
 	// Write
 
-	// Expressions ---------------------------------------------------------
+	//*********************************************************************
+	// Expressions
+	//*********************************************************************
 
 	@Override
 	public Void visit(ArithmeticOperation element, Type params) {
 		super.visit(element, params);
 		element.setLValue(false);
-		element.setType(
-				element.getLeft().getType().arithmetic(
-						((ArithmeticOperation) params).getRight().getType(), element));
+		element.setType( element.getLeft().getType().arithmetic( element.getRight().getType(), element));
 		return null;
 	}
 
@@ -88,7 +87,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 	public Void visit(ArrayAccess element, Type params) {
 		super.visit(element, params);
 		element.setLValue(true);
-		element.setType(element.getLeft().getType());
+		element.setType(element.getLeft().getType().indexing(element.getRight().getType(), element));
 		return null;
 	}
 
@@ -110,6 +109,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 	@Override
 	public Void visit(CharacterLiteral element, Type params) {
 		element.setLValue(false);
+		element.setType(CharacterType.getInstance());
 		return null;
 	}
 
@@ -130,6 +130,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 	@Override
 	public Void visit(IntegerLiteral element, Type params) {
 		element.setLValue(false);
+		element.setType(IntegerType.getInstance());
 		return null;
 	}
 
@@ -150,6 +151,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 	@Override
 	public Void visit(RealLiteral element, Type params) {
 		element.setLValue(false);
+		element.setType(RealType.getInstance());
 		return null;
 	}
 

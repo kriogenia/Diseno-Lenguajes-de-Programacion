@@ -32,12 +32,12 @@ public class RealType extends AbstractType {
     }
 
     @Override
-    public Type promotesTo(Type type) {
+    public Type promotesTo(Type type, ASTNode ast) {
         if (type instanceof ErrorType)
             return type;
         if (type == instance)
             return this;
-        return null;
+        return super.promotesTo(type, ast);
     }
 
     @Override

@@ -15,6 +15,6 @@ public interface Type extends ASTNode  {
 	Type arithmetic(Type type, ASTNode ast);
 	Type indexing(Type type, ASTNode ast);
 	Type parenthesis(List<Expression> types, ASTNode ast);
-	Type promotesTo(Type type);
+	Type promotesTo(Type type, ASTNode ast);
 
 }
