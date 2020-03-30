@@ -30,8 +30,18 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 			ErrorHandler.getInstance().addError(
 					new ErrorType(element.getId().getLine(),element.getId().getColumn(),
 					"(Invalid Assigment): The left side of an assignment should be able to store the value."));
+		// Checks the left side is valid
+		if(element.getId().getType() instanceof ErrorType) {
+			ErrorHandler.getInstance().addError((ErrorType) element.getId().getType());
+			return null;
+		}
+		// Checks the right side is valid
+		if(element.getRefered().getType() instanceof ErrorType) {
+			ErrorHandler.getInstance().addError((ErrorType) element.getRefered().getType());
+			return null;
+		}
 		// Checks if the right side is the correct type
-		Type promotion = element.getId().getType().promotesTo(element.getRefered().getType(), element);
+		Type promotion = element.getRefered().getType().promotesTo(element.getId().getType(), element);
 		if (promotion instanceof ErrorType)
 			ErrorHandler.getInstance().addError((ErrorType) promotion);
 		return null;

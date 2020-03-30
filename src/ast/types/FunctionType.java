@@ -45,8 +45,8 @@ public class FunctionType extends AbstractType {
                 return types.get(i).getType();
             // Checks the parameters are of the correct type
             if (getArgs().get(i).getType() != types.get(i).getType())
-                return new ErrorType(ast.getLine(), ast.getColumn(), "(Invalid Call): this parameter " +
-                        "should be a " + getArgs().get(i).getType().getName());
+                return new ErrorType(ast.getLine(), ast.getColumn(), "(Invalid Call): Expected " +
+                        getArgs().get(i).getType().getName() + " and received a " + types.get(i).getType().getName());
         }
         return this;
     }
