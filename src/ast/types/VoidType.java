@@ -1,9 +1,8 @@
 package ast.types;
 
-import ast.AbstractASTNode;
 import visitor.Visitor;
 
-public class VoidType extends AbstractASTNode implements Type {
+public class VoidType extends AbstractType {
 
     private static VoidType instance;
 
@@ -15,6 +14,11 @@ public class VoidType extends AbstractASTNode implements Type {
         if (instance == null)
             instance = new VoidType();
         return instance;
+    }
+
+    @Override
+    public String getName() {
+        return "void";
     }
 
     @Override

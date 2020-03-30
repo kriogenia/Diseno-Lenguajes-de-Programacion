@@ -1,15 +1,19 @@
 package ast.types;
 
-import ast.AbstractASTNode;
 import visitor.Visitor;
 
-public class ErrorType extends AbstractASTNode implements Type {
+public class ErrorType extends AbstractType implements Comparable {
 
     private String message;
 
     public ErrorType(int line, int column, String message) {
         super(line, column);
         this.message = message;
+    }
+
+    @Override
+    public String getName() {
+        return "error";
     }
 
     @Override
@@ -21,5 +25,11 @@ public class ErrorType extends AbstractASTNode implements Type {
     public String toString() {
         return "ERROR [line: " + getLine() + ", column: " + getColumn() + "] - "
                 + this.message;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        ErrorType b = (ErrorType)o;
+        return (this.getLine() - b.getLine() == 0) ? this.getColumn() - b.getColumn() : this.getLine() - b.getLine();
     }
 }

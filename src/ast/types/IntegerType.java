@@ -1,9 +1,9 @@
 package ast.types;
 
-import ast.AbstractASTNode;
+import ast.ASTNode;
 import visitor.Visitor;
 
-public class IntegerType extends AbstractASTNode implements Type {
+public class IntegerType extends AbstractType {
 
     private static IntegerType instance;
 
@@ -15,6 +15,34 @@ public class IntegerType extends AbstractASTNode implements Type {
         if (instance == null)
             instance = new IntegerType();
         return instance;
+    }
+
+    @Override
+    public String getName() {
+        return "integer";
+    }
+
+    @Override
+    public boolean isLogical() {
+        return true;
+    }
+
+    @Override
+    public Type arithmetic(Type t, ASTNode ast) {
+        if (t instanceof ErrorType)
+            return t;
+        if (t == IntegerType.getInstance())
+            return this;
+        return super.arithmetic(t, ast);
+    }
+
+    @Override
+    public Type promotesTo(Type type) {
+        if (type instanceof ErrorType)
+            return type;
+        if (type == instance)
+            return this;
+        return null;
     }
 
     @Override

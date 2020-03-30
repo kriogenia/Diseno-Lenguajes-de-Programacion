@@ -180,7 +180,7 @@ public abstract class AbstractVisitor<P,R> implements Visitor<P,R> {
 
 	@Override
 	public R visit(FunctionType element, P params) {
-		element.getParams().forEach(x -> x.accept(this, params));
+		element.getArgs().forEach(x -> x.accept(this, params));
 		element.getReturnType().accept(this, params);
 		return null;
 	}

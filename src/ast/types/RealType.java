@@ -1,9 +1,9 @@
 package ast.types;
 
-import ast.AbstractASTNode;
+import ast.ASTNode;
 import visitor.Visitor;
 
-public class RealType extends AbstractASTNode implements Type {
+public class RealType extends AbstractType {
 
    private static RealType instance;
 
@@ -16,6 +16,29 @@ public class RealType extends AbstractASTNode implements Type {
            instance = new RealType();
        return instance;
    }
+
+    @Override
+    public String getName() {
+        return "double";
+    }
+
+    @Override
+    public Type arithmetic(Type t, ASTNode ast) {
+        if (t instanceof ErrorType)
+            return t;
+        if (t == RealType.getInstance())
+            return this;
+        return super.arithmetic(t, ast);
+    }
+
+    @Override
+    public Type promotesTo(Type type) {
+        if (type instanceof ErrorType)
+            return type;
+        if (type == instance)
+            return this;
+        return null;
+    }
 
     @Override
     public <P, R> R accept(Visitor<P, R> visitor, P param) {

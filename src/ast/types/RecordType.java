@@ -1,11 +1,10 @@
 package ast.types;
 
-import ast.AbstractASTNode;
 import visitor.Visitor;
 
 import java.util.List;
 
-public class RecordType extends AbstractASTNode implements Type {
+public class RecordType extends AbstractType {
 
     private List<RecordField> records;
 
@@ -16,6 +15,11 @@ public class RecordType extends AbstractASTNode implements Type {
 
     public List<RecordField> getRecords() {
         return records;
+    }
+
+    @Override
+    public String getName() {
+        return "struct";
     }
 
     @Override

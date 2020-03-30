@@ -9,7 +9,7 @@ import parser.CmmLexer;
 import parser.CmmParser;
 import visitor.Visitor;
 import visitor.semanthic.IdentificationVisitor;
-import visitor.semanthic.LValueVisitor;
+import visitor.semanthic.TypeCheckingVisitor;
 
 public class Main {
 	
@@ -28,11 +28,8 @@ public class Main {
 		CmmParser parser = new CmmParser(tokens);	
 		Program p = parser.program().ast;
 
-		Visitor lvvisitor = new LValueVisitor();
-		p.accept(lvvisitor, null);
-
-		Visitor idvisitor = new IdentificationVisitor();
-		p.accept(idvisitor, null);
+		p.accept(new IdentificationVisitor(), null);
+		p.accept(new TypeCheckingVisitor(), null);
 
 		ErrorHandler.getInstance().showErrors(System.out);
 

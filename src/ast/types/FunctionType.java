@@ -1,30 +1,50 @@
 package ast.types;
 
-import ast.AbstractASTNode;
+import ast.ASTNode;
 import ast.definitions.VariableDefinition;
+import ast.expressions.Expression;
 import visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FunctionType extends AbstractASTNode implements Type {
+public class FunctionType extends AbstractType {
 
-    private List<VariableDefinition> params;
+    private List<VariableDefinition> args;
     private Type returnType;
 
     public FunctionType(int line, int column, List<VariableDefinition> params, Type returnType) {
         super(line, column);
-        this.params = new ArrayList<>();
-        this.params.addAll(params);
+        this.args = new ArrayList<>();
+        this.args.addAll(params);
         this.returnType = returnType;
     }
 
-    public List<VariableDefinition> getParams() {
-        return params;
+    @Override
+    public String getName() {
+        return "function with return " + returnType.getName();
+    }
+
+    public List<VariableDefinition> getArgs() {
+        return args;
     }
 
     public Type getReturnType() {
         return returnType;
+    }
+
+    @Override
+    public Type parenthesis(List<Expression> types, ASTNode ast) {
+        if (args.size() != types.size())
+            return new ErrorType(ast.getLine(), ast.getColumn(), "This function doesn't have an invocation " +
+                    "with " + types.size() + " parameters");
+        for (int i = 0; i< getArgs().size(); i++){
+            if (types.get(i).getType() instanceof ErrorType)
+                return types.get(i).getType();
+            if (getArgs().get(i).getType() != types.get(i).getType())
+                return new ErrorType(ast.getLine(), ast.getColumn(), "El tipo del parámetro debería ser x");
+        }
+        return null; //MIRAR ESTO
     }
 
     @Override
@@ -35,7 +55,7 @@ public class FunctionType extends AbstractASTNode implements Type {
     @Override
     public String toString() {
         return "FunctionType{" +
-                "params=" + params +
+                "params=" + args +
                 ", returnType=" + returnType +
                 '}';
     }

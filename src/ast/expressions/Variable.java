@@ -13,6 +13,10 @@ public class Variable extends AbstractExpression {
         this.name = name;
     }
 
+    public Definition getDefinition() {
+        return definition;
+    }
+
     public String getName() {
         return name;
     }

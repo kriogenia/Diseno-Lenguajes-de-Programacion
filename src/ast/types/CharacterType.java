@@ -1,9 +1,8 @@
 package ast.types;
 
-import ast.AbstractASTNode;
 import visitor.Visitor;
 
-public class CharacterType extends AbstractASTNode implements Type {
+public class CharacterType extends AbstractType {
 
     private static CharacterType instance;
 
@@ -15,6 +14,20 @@ public class CharacterType extends AbstractASTNode implements Type {
         if (instance == null)
             instance = new CharacterType();
         return instance;
+    }
+
+    @Override
+    public String getName() {
+        return "character";
+    }
+
+    @Override
+    public Type promotesTo(Type type) {
+        if (type instanceof ErrorType)
+            return type;
+        if (type == instance)
+            return this;
+        return null;
     }
 
     @Override

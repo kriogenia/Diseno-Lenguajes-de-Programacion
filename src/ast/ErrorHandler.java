@@ -3,8 +3,7 @@ package ast;
 import ast.types.ErrorType;
 
 import java.io.PrintStream;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 public class ErrorHandler {
 
@@ -27,10 +26,12 @@ public class ErrorHandler {
     }
 
     public void showErrors(PrintStream out) {
+        errors.sort(null);
         errors.forEach(out::println);
     }
 
     public void addError(ErrorType error) {
         errors.add(error);
     }
+
 }

@@ -1,17 +1,14 @@
-package ast.sentences;
+package ast.expressions;
 
-import ast.AbstractASTNode;
-import ast.expressions.Expression;
-import ast.expressions.Variable;
+import ast.sentences.Sentence;
 import visitor.Visitor;
 
 import java.util.List;
 
-public class Call extends AbstractASTNode implements Sentence, Expression {
+public class Call extends AbstractExpression implements Sentence {
 
     private Variable function;
     private List<Expression> params;
-    private boolean lValue;
 
     public Call(int line, int column, Variable function, List<Expression> params) {
         super(line, column);
@@ -38,15 +35,5 @@ public class Call extends AbstractASTNode implements Sentence, Expression {
                 "function=" + function +
                 ", params=" + params.size() +
                 '}';
-    }
-
-    @Override
-    public boolean getLValue() {
-        return lValue;
-    }
-
-    @Override
-    public void setLValue(boolean lValue) {
-        this.lValue = lValue;
     }
 }
