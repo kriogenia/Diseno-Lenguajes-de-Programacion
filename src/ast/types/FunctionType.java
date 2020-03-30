@@ -35,16 +35,20 @@ public class FunctionType extends AbstractType {
 
     @Override
     public Type parenthesis(List<Expression> types, ASTNode ast) {
+        // Checks the number of parameters and arguments match
         if (args.size() != types.size())
-            return new ErrorType(ast.getLine(), ast.getColumn(), "This function doesn't have an invocation " +
-                    "with " + types.size() + " parameters");
+            return new ErrorType(ast.getLine(), ast.getColumn(), "(Invalid Call): This function doesn't " +
+                    "have an invocation with " + types.size() + " parameters");
         for (int i = 0; i< getArgs().size(); i++){
+            // Checks the parameters are valid
             if (types.get(i).getType() instanceof ErrorType)
                 return types.get(i).getType();
+            // Checks the parameters are of the correct type
             if (getArgs().get(i).getType() != types.get(i).getType())
-                return new ErrorType(ast.getLine(), ast.getColumn(), "El tipo del parámetro debería ser x");
+                return new ErrorType(ast.getLine(), ast.getColumn(), "(Invalid Call): this parameter " +
+                        "should be a " + getArgs().get(i).getType().getName());
         }
-        return null; //MIRAR ESTO
+        return this;
     }
 
     @Override

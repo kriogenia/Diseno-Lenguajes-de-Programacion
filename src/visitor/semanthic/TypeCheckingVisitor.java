@@ -9,18 +9,18 @@ import visitor.AbstractVisitor;
 
 public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 
-	//*********************************************************************
-	// Definitions
-	//*********************************************************************
+	/***************************************************
+	 *                 DEFINITIONS                     *
+	 **************************************************/
 
 	@Override
 	public Void visit(FunctionDefinition element, Type params) {
 		return super.visit(element, ((FunctionType) element.getType()).getReturnType());
 	}
 
-	//*********************************************************************
-	// Sentences
-	//*********************************************************************
+	/***************************************************
+	 *                  SENTENCES                      *
+	 **************************************************/
 
 	@Override
 	public Void visit(Assign element, Type params) {
@@ -71,9 +71,9 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 	// While
 	// Write
 
-	//*********************************************************************
-	// Expressions
-	//*********************************************************************
+	/***************************************************
+	 *                  EXPRESSIONS                    *
+	 **************************************************/
 
 	@Override
 	public Void visit(ArithmeticOperation element, Type params) {
@@ -95,7 +95,10 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 	public Void visit(Call element, Type params) {
 		super.visit(element, params);
 		element.setLValue(false);
+		// Checks the parameters match the arguments
 		element.setType(element.getFunction().getType().parenthesis(element.getParams(), element));
+		if (element.getType() instanceof ErrorType)
+			ErrorHandler.getInstance().addError((ErrorType) (element.getType()));
 		return null;
 	}
 

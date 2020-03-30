@@ -14,13 +14,13 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
 
 	@Override
 	public Type arithmetic(ASTNode ast) {
-		return new ErrorType(ast.getLine(),ast.getColumn(), "Invalid operation, you can't substract " +
+		return new ErrorType(ast.getLine(),ast.getColumn(), "(Invalid Operation): You can't substract " +
 				this.getName());
 	}
 
 	@Override
 	public Type arithmetic(Type t, ASTNode ast) {
-		return new ErrorType(ast.getLine(),ast.getColumn(), "Invalid operation members, you can't operate" +
+		return new ErrorType(ast.getLine(),ast.getColumn(), "(Invalid Operation): You can't operate " +
 				this.getName() + " with " + t.getName());
 	}
 
@@ -34,16 +34,18 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
 		if (type instanceof ErrorType)
 			return type;
 		return new ErrorType(ast.getLine(), ast.getColumn(),
-				"(Invalid Type): " + type.getName() + " is not of type " + this.getName());
+				"(Invalid Type): " + this.getName() + " is not of type " + type.getName());
 	}
 
 	@Override
 	public Type indexing(Type t, ASTNode ast) {
-		return new ErrorType(ast.getLine(),ast.getColumn(), this.getName() + " is not an array");
+		return new ErrorType(ast.getLine(),ast.getColumn(),
+				"(Invalid Access): " + this.getName() + " is not an array");
 	}
 
 	@Override
 	public Type parenthesis(List<Expression> types, ASTNode ast) {
-		return new ErrorType(ast.getLine(), ast.getColumn(), "Invoked methods should be functions");
+		return new ErrorType(ast.getLine(), ast.getColumn(),
+				"(Invalid Function Call): The called token is not a function");
 	}
 }

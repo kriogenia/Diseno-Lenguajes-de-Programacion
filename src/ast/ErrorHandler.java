@@ -31,7 +31,8 @@ public class ErrorHandler {
     }
 
     public void addError(ErrorType error) {
-        errors.add(error);
+        if (!errors.contains(error))
+            errors.add(error);
     }
 
 }
