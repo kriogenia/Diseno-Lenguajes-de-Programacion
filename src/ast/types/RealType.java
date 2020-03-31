@@ -26,6 +26,11 @@ public class RealType extends AbstractType {
     public boolean isBuiltInType() { return true; }
 
     @Override
+    public Type arithmetic(ASTNode ast) {
+        return this;
+    }
+
+    @Override
     public Type arithmetic(Type t, ASTNode ast) {
         if (t instanceof ErrorType)
             return t;

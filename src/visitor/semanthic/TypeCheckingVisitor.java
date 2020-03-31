@@ -199,6 +199,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 	public Void visit(UnaryMinusOperation element, Type params) {
 		super.visit(element, params);
 		element.setLValue(false);
+		element.setType(element.getExpression().getType().arithmetic(element));
 		return null;
 	}
 

@@ -1,0 +1,14 @@
+
+int i;
+double f;
+
+struct  {
+  int a;
+} a;
+
+void main() {
+  write -i;
+  write -f;
+  write -a;     // * Error 1
+}
+
