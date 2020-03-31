@@ -18,6 +18,7 @@ public interface Type extends ASTNode  {
 	Type comparison(Type type, ASTNode ast);
 	Type indexing(Type type, ASTNode ast);
 	Type logical(ASTNode ast);
+	Type logical(Type type, ASTNode ast);
 	Type parenthesis(List<Expression> types, ASTNode ast);
 	Type promotesTo(Type type, ASTNode ast);
 

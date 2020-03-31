@@ -54,6 +54,15 @@ public class IntegerType extends AbstractType {
     }
 
     @Override
+    public Type logical(Type t, ASTNode ast) {
+        if (t instanceof ErrorType)
+            return t;
+        if (t == IntegerType.getInstance())
+            return this;
+        return super.logical(t, ast);
+    }
+
+    @Override
     public Type promotesTo(Type type, ASTNode ast) {
         if (type instanceof ErrorType)
             return type;

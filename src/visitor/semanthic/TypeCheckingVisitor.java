@@ -184,6 +184,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 	public Void visit(LogicalOperation element, Type params) {
 		super.visit(element, params);
 		element.setLValue(false);
+		element.setType( element.getLeft().getType().logical( element.getRight().getType(), element) );
 		return null;
 	}
 
