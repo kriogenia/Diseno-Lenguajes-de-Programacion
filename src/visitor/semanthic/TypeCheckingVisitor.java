@@ -176,6 +176,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 	public Void visit(LogicalNotOperation element, Type params) {
 		super.visit(element, params);
 		element.setLValue(false);
+		element.setType(element.getExpression().getType().logical(element));
 		return null;
 	}
 

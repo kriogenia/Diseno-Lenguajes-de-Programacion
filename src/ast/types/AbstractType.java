@@ -53,6 +53,12 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
 	}
 
 	@Override
+	public Type logical(ASTNode ast) {
+		return new ErrorType(ast.getLine(),ast.getColumn(), "(Invalid Operation): You can't negate " +
+				this.getName());
+	}
+
+	@Override
 	public Type parenthesis(List<Expression> types, ASTNode ast) {
 		return new ErrorType(ast.getLine(), ast.getColumn(),
 				"(Invalid Function Call): The called token is not a function");
