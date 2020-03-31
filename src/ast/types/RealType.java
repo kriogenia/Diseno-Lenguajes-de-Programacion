@@ -35,6 +35,15 @@ public class RealType extends AbstractType {
     }
 
     @Override
+    public Type comparison(Type t, ASTNode ast) {
+        if (t instanceof ErrorType)
+            return t;
+        if (t == RealType.getInstance())
+            return IntegerType.getInstance();
+        return super.comparison(t, ast);
+    }
+
+    @Override
     public Type promotesTo(Type type, ASTNode ast) {
         if (type instanceof ErrorType)
             return type;

@@ -62,7 +62,10 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 	@Override
 	public Void visit(Read element, Type params) {
 		super.visit(element, params);
-		// Checks the expressions are valid to store the input
+		// Checks the expressions are valid
+		element.getExpressions().stream().filter(e -> e.getType() instanceof ErrorType).forEach(
+				e -> ErrorHandler.getInstance().addError(((ErrorType) e.getType())));
+		// Checks the expressions are able to store the input
 		element.getExpressions().stream().filter(Expression::isNotLValue).forEach(
 				e -> ErrorHandler.getInstance().addError(
 						new ErrorType(e.getLine(),e.getColumn(),
@@ -89,6 +92,15 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 					new ErrorType(element.getCondition().getLine(),element.getCondition().getColumn(),
 							"(Invalid Condition): " + element.getCondition().getType().getName() +
 									" is not a logical expression."));
+		return null;
+	}
+
+	@Override
+	public Void visit(Write element, Type params) {
+		super.visit(element, params);
+		// Checks the expressions are valid
+		element.getExpressions().stream().filter(e -> e.getType() instanceof ErrorType).forEach(
+				e -> ErrorHandler.getInstance().addError(((ErrorType) e.getType())));
 		return null;
 	}
 
@@ -142,6 +154,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 	public Void visit(ComparisonOperation element, Type params) {
 		super.visit(element, params);
 		element.setLValue(false);
+		element.setType( element.getLeft().getType().comparison( element.getRight().getType(), element));
 		return null;
 	}
 

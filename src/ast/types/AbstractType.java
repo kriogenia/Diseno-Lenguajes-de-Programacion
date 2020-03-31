@@ -41,11 +41,9 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
 	}
 
 	@Override
-	public Type promotesTo(Type type, ASTNode ast) {
-		if (type instanceof ErrorType)
-			return type;
-		return new ErrorType(ast.getLine(), ast.getColumn(),
-				"(Invalid Type): " + this.getName() + " is not of type " + type.getName());
+	public Type comparison(Type t, ASTNode ast) {
+		return new ErrorType(ast.getLine(),ast.getColumn(), "(Invalid Comparison): You can't compare " +
+				this.getName() + " with " + t.getName());
 	}
 
 	@Override
@@ -58,5 +56,13 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
 	public Type parenthesis(List<Expression> types, ASTNode ast) {
 		return new ErrorType(ast.getLine(), ast.getColumn(),
 				"(Invalid Function Call): The called token is not a function");
+	}
+
+	@Override
+	public Type promotesTo(Type type, ASTNode ast) {
+		if (type instanceof ErrorType)
+			return type;
+		return new ErrorType(ast.getLine(), ast.getColumn(),
+				"(Invalid Type): " + this.getName() + " is not of type " + type.getName());
 	}
 }
