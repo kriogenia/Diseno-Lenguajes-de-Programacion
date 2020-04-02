@@ -21,6 +21,12 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
 	public boolean isBuiltInType() { return false; }
 
 	@Override
+	public Type access(String field, ASTNode ast) {
+		return new ErrorType(ast.getLine(),ast.getColumn(), "(Invalid Access): " + this.getName() +
+				" doesn't have accesible fields");
+	}
+
+	@Override
 	public Type arithmetic(ASTNode ast) {
 		return new ErrorType(ast.getLine(),ast.getColumn(), "(Invalid Operation): You can't substract " +
 				this.getName());

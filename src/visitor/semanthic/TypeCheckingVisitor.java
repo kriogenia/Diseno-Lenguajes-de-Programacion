@@ -7,6 +7,8 @@ import ast.sentences.*;
 import ast.types.*;
 import visitor.AbstractVisitor;
 
+import java.util.List;
+
 public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 
 	/***************************************************
@@ -44,6 +46,17 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 		Type promotion = element.getRefered().getType().promotesTo(element.getId().getType(), element);
 		if (promotion instanceof ErrorType)
 			ErrorHandler.getInstance().addError((ErrorType) promotion);
+		return null;
+	}
+
+	@Override
+	public Void visit(Call element, Type params) {
+		super.visit(element, params);
+		element.setLValue(false);
+		element.setType(element.getFunction().getType().parenthesis(element.getParams(), element));
+		// Checks the parameters match the arguments
+		if (element.getType() instanceof ErrorType)
+			ErrorHandler.getInstance().addError((ErrorType) (element.getType()));
 		return null;
 	}
 
@@ -125,17 +138,6 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 	}
 
 	@Override
-	public Void visit(Call element, Type params) {
-		super.visit(element, params);
-		element.setLValue(false);
-		element.setType(element.getFunction().getType().parenthesis(element.getParams(), element));
-		// Checks the parameters match the arguments
-		if (element.getType() instanceof ErrorType)
-			ErrorHandler.getInstance().addError((ErrorType) (element.getType()));
-		return null;
-	}
-
-	@Override
 	public Void visit(Cast element, Type params) {
 		super.visit(element, params);
 		element.setLValue(false);
@@ -162,6 +164,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 	public Void visit(FieldAccess element, Type params) {
 		super.visit(element, params);
 		element.setLValue(true);
+		element.setType(element.getExpression().getType().access(element.getName(), element));
 		return null;
 	}
 
@@ -212,6 +215,19 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
 						"is not yet defined"));
 		else
 			element.setType(element.getDefinition().getType());
+		return null;
+	}
+
+	/***************************************************
+	 *                  EXPRESSIONS                    *
+	 **************************************************/
+
+	@Override
+	public Void visit(RecordType element, Type params) {
+		super.visit(element, params);
+		List<ErrorType> badDefinitions = element.getDuplicates();
+		if (!badDefinitions.isEmpty())
+			badDefinitions.forEach(x -> ErrorHandler.getInstance().addError(x));
 		return null;
 	}
 }

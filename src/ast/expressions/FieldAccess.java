@@ -17,6 +17,10 @@ public class FieldAccess extends AbstractExpression {
         return expression;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public <P, R> R accept(Visitor<P, R> visitor, P param) {
         return visitor.visit(this, param);

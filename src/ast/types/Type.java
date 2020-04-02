@@ -12,6 +12,7 @@ public interface Type extends ASTNode  {
 	boolean isNotLogical();
 	boolean isBuiltInType();
 
+	Type access(String field, ASTNode ast);
 	Type arithmetic(ASTNode ast);
 	Type arithmetic(Type type, ASTNode ast);
 	Type cast(Type type, ASTNode ast);
