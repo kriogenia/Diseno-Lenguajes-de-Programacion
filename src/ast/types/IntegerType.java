@@ -1,7 +1,7 @@
 package ast.types;
 
 import ast.ASTNode;
-import visitor.Visitor;
+import visitors.Visitor;
 
 public class IntegerType extends AbstractType {
 
@@ -21,6 +21,9 @@ public class IntegerType extends AbstractType {
     public String getName() {
         return "integer";
     }
+
+    @Override
+    public int getSize() { return 2; }
 
     @Override
     public boolean isNotLogical() {

@@ -1,7 +1,7 @@
 package ast.types;
 
 import ast.definitions.AbstractDefinition;
-import visitor.Visitor;
+import visitors.Visitor;
 
 public class RecordField extends AbstractDefinition {
 

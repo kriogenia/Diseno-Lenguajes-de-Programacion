@@ -1,4 +1,4 @@
-package visitor.semanthic;
+package visitors;
 
 import ast.ErrorHandler;
 import ast.definitions.Definition;
@@ -6,8 +6,7 @@ import ast.definitions.FunctionDefinition;
 import ast.definitions.VariableDefinition;
 import ast.expressions.Variable;
 import ast.types.ErrorType;
-import visitor.AbstractVisitor;
-import visitor.semanthic.symboltable.SymbolTable;
+import visitors.symboltable.SymbolTable;
 
 public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 

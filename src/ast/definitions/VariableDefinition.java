@@ -2,11 +2,9 @@ package ast.definitions;
 
 import ast.sentences.Sentence;
 import ast.types.Type;
-import visitor.Visitor;
+import visitors.Visitor;
 
 public class VariableDefinition extends AbstractDefinition implements Sentence {
-
-    private int offset;
 
     public VariableDefinition(int line, int column, String name, Type type) {
         super(line, column, name, type);

@@ -1,8 +1,7 @@
 package ast.types;
 
 import ast.ASTNode;
-import ast.expressions.FieldAccess;
-import visitor.Visitor;
+import visitors.Visitor;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -39,6 +38,11 @@ public class RecordType extends AbstractType {
     @Override
     public String getName() {
         return "struct";
+    }
+
+    @Override
+    public int getSize() {
+        return records.stream().map(x -> x.getType().getSize()).reduce(0, Integer::sum);
     }
 
     @Override

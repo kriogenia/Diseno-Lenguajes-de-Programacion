@@ -1,7 +1,7 @@
 package ast.types;
 
 import ast.ASTNode;
-import visitor.Visitor;
+import visitors.Visitor;
 
 public class RealType extends AbstractType {
 
@@ -21,6 +21,9 @@ public class RealType extends AbstractType {
     public String getName() {
         return "double";
     }
+
+    @Override
+    public int getSize() { return 4; }
 
     @Override
     public boolean isBuiltInType() { return true; }

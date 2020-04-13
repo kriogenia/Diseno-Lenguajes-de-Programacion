@@ -2,7 +2,7 @@ package ast.definitions;
 
 import ast.sentences.Sentence;
 import ast.types.Type;
-import visitor.Visitor;
+import visitors.Visitor;
 
 import java.util.List;
 

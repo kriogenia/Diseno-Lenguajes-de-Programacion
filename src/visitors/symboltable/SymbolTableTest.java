@@ -1,4 +1,4 @@
-package visitor.semanthic.symboltable;
+package visitors.symboltable;
 
 import ast.definitions.VariableDefinition;
 

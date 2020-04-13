@@ -1,6 +1,6 @@
 package ast.types;
 
-import visitor.Visitor;
+import visitors.Visitor;
 
 public class VoidType extends AbstractType {
 
@@ -22,6 +22,9 @@ public class VoidType extends AbstractType {
     }
 
     @Override
+    public int getSize() { return 0; }
+
+    @Override
     public <P, R> R accept(Visitor<P, R> visitor, P param) {
         return visitor.visit(this, param);
     }
@@ -30,4 +33,5 @@ public class VoidType extends AbstractType {
     public String toString() {
         return "VoidType";
     }
+
 }

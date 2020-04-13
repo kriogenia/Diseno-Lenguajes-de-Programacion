@@ -1,4 +1,4 @@
-package visitor.semanthic.symboltable;
+package visitors.symboltable;
 
 import java.util.*;
 import ast.definitions.Definition;
@@ -39,7 +39,7 @@ public class SymbolTable {
 		return null;
 	}
 
-	public Definition findInCurrentScope(String id) {
+	Definition findInCurrentScope(String id) {
 		return table.get(scope).get(id);
 	}
 }

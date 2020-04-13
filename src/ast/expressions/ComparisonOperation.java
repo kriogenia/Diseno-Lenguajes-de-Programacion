@@ -1,6 +1,6 @@
 package ast.expressions;
 
-import visitor.Visitor;
+import visitors.Visitor;
 
 public class ComparisonOperation extends AbstractBinarialOperation {
 

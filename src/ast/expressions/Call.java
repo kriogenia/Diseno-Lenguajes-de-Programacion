@@ -1,7 +1,7 @@
 package ast.expressions;
 
 import ast.sentences.Sentence;
-import visitor.Visitor;
+import visitors.Visitor;
 
 import java.util.List;
 

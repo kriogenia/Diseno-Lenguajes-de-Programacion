@@ -1,11 +1,11 @@
-package visitor.semanthic;
+package visitors;
 
 import ast.ErrorHandler;
 import ast.definitions.FunctionDefinition;
 import ast.expressions.*;
 import ast.sentences.*;
 import ast.types.*;
-import visitor.AbstractVisitor;
+import visitors.AbstractVisitor;
 
 import java.util.List;
 

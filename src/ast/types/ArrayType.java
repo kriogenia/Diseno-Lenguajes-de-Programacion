@@ -1,7 +1,7 @@
 package ast.types;
 
 import ast.ASTNode;
-import visitor.Visitor;
+import visitors.Visitor;
 
 public class ArrayType extends AbstractType {
 
@@ -18,6 +18,9 @@ public class ArrayType extends AbstractType {
 	public String getName() {
 		return "array of " + type.getName();
 	}
+
+	@Override
+	public int getSize() { return size * type.getSize(); }
 
     public Type getType() {
         return type;

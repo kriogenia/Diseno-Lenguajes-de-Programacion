@@ -1,7 +1,7 @@
 package ast;
 
 import ast.definitions.Definition;
-import visitor.Visitor;
+import visitors.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,8 @@ public class Program extends AbstractASTNode {
     public void addAll(List<Definition> defs) { definitions.addAll(defs); }
 
     @Override
-    public Object accept(Visitor visitor, Object param) {
+    public <P, R> R accept(Visitor<P, R> visitor, P param) {
         return visitor.visit(this, param);
     }
+
 }

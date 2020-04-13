@@ -1,6 +1,6 @@
 package ast.types;
 
-import visitor.Visitor;
+import visitors.Visitor;
 
 public class ErrorType extends AbstractType implements Comparable {
 
@@ -15,6 +15,9 @@ public class ErrorType extends AbstractType implements Comparable {
     public String getName() {
         return "error";
     }
+
+    @Override
+    public int getSize() { throw new IllegalStateException("Can't access error size, pending compilation errors."); }
 
     @Override
     public <P, R> R accept(Visitor<P, R> visitor, P param) {

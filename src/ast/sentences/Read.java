@@ -2,7 +2,7 @@ package ast.sentences;
 
 import ast.AbstractASTNode;
 import ast.expressions.Expression;
-import visitor.Visitor;
+import visitors.Visitor;
 
 import java.util.List;
 

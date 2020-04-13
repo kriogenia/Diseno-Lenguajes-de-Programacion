@@ -1,7 +1,7 @@
 package ast.types;
 
 import ast.ASTNode;
-import visitor.Visitor;
+import visitors.Visitor;
 
 public class CharacterType extends AbstractType {
 
@@ -21,6 +21,9 @@ public class CharacterType extends AbstractType {
     public String getName() {
         return "character";
     }
+
+    @Override
+    public int getSize() { return 1; }
 
     @Override
     public boolean isBuiltInType() { return true; }

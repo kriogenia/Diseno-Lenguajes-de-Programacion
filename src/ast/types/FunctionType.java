@@ -3,7 +3,7 @@ package ast.types;
 import ast.ASTNode;
 import ast.definitions.VariableDefinition;
 import ast.expressions.Expression;
-import visitor.Visitor;
+import visitors.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +24,9 @@ public class FunctionType extends AbstractType {
     public String getName() {
         return "function with return " + returnType.getName();
     }
+
+    @Override
+    public int getSize() { return 0; }
 
     public List<VariableDefinition> getArgs() {
         return args;

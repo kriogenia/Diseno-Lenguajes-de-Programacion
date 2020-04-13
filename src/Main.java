@@ -7,9 +7,8 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import parser.CmmLexer;
 import parser.CmmParser;
-import visitor.Visitor;
-import visitor.semanthic.IdentificationVisitor;
-import visitor.semanthic.TypeCheckingVisitor;
+import visitors.IdentificationVisitor;
+import visitors.TypeCheckingVisitor;
 
 public class Main {
 	
