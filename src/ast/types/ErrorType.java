@@ -17,7 +17,7 @@ public class ErrorType extends AbstractType implements Comparable {
     }
 
     @Override
-    public int getSize() { throw new IllegalStateException("Can't access error size, pending compilation errors."); }
+    public int getNumberOfBytes() { throw new IllegalStateException("Can't access error size, pending compilation errors."); }
 
     @Override
     public <P, R> R accept(Visitor<P, R> visitor, P param) {

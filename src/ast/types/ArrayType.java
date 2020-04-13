@@ -20,7 +20,7 @@ public class ArrayType extends AbstractType {
 	}
 
 	@Override
-	public int getSize() { return size * type.getSize(); }
+	public int getNumberOfBytes() { return size * type.getNumberOfBytes(); }
 
     public Type getType() {
         return type;

@@ -10,6 +10,8 @@ public class FunctionDefinition extends AbstractDefinition {
 
     private List<Sentence> body;
 
+    private int localsNumberOfBytes;
+
     public FunctionDefinition(int line, int column, String name, Type type, List<Sentence> body) {
         super(line, column, name, type);
         this.body = body;
@@ -19,6 +21,8 @@ public class FunctionDefinition extends AbstractDefinition {
         return body;
     }
 
+    public void setLocalsNumberOfBytes(int localsNumberOfBytes) { this.localsNumberOfBytes = localsNumberOfBytes; }
+
     @Override
     public <P, R> R accept(Visitor<P, R> visitor, P param) {
         return visitor.visit(this, param);
@@ -27,9 +31,10 @@ public class FunctionDefinition extends AbstractDefinition {
     @Override
     public String toString() {
         return "FunctionDefinition{" +
-                "body=" + body.size() +
-                ", name='" + name + '\'' +
+                " name='" + name + '\'' +
                 ", type=" + type +
+                ", scope=" + scope +
+                ", localsNumberOfBytes=" + localsNumberOfBytes +
                 '}';
     }
 }

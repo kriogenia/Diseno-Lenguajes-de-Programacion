@@ -8,7 +8,7 @@ import java.util.List;
 public interface Type extends ASTNode  {
 
 	String getName();
-	int getSize();
+	int getNumberOfBytes();
 
 	boolean isNotLogical();
 	boolean isBuiltInType();

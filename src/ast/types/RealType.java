@@ -23,7 +23,7 @@ public class RealType extends AbstractType {
     }
 
     @Override
-    public int getSize() { return 4; }
+    public int getNumberOfBytes() { return 4; }
 
     @Override
     public boolean isBuiltInType() { return true; }

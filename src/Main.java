@@ -8,6 +8,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import parser.CmmLexer;
 import parser.CmmParser;
 import visitors.IdentificationVisitor;
+import visitors.OffsetVisitor;
 import visitors.TypeCheckingVisitor;
 
 public class Main {
@@ -31,6 +32,9 @@ public class Main {
 		p.accept(new TypeCheckingVisitor(), null);
 
 		ErrorHandler.getInstance().showErrors(System.out);
+
+		if (!ErrorHandler.getInstance().anyError())
+			p.accept(new OffsetVisitor(), null);
 
 		IntrospectorModel model = new IntrospectorModel("Program", p);
 		new IntrospectorTree("Tree", model);

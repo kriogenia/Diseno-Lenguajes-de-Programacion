@@ -22,7 +22,7 @@ public class VoidType extends AbstractType {
     }
 
     @Override
-    public int getSize() { return 0; }
+    public int getNumberOfBytes() { return 0; }
 
     @Override
     public <P, R> R accept(Visitor<P, R> visitor, P param) {

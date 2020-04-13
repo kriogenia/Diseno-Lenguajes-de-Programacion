@@ -41,8 +41,8 @@ public class RecordType extends AbstractType {
     }
 
     @Override
-    public int getSize() {
-        return records.stream().map(x -> x.getType().getSize()).reduce(0, Integer::sum);
+    public int getNumberOfBytes() {
+        return records.stream().map(x -> x.getType().getNumberOfBytes()).reduce(0, Integer::sum);
     }
 
     @Override

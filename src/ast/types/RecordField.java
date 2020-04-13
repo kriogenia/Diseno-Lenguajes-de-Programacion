@@ -5,6 +5,7 @@ import visitors.Visitor;
 
 public class RecordField extends AbstractDefinition {
 
+    private int offset;
     private int scope;
 
     public RecordField(int line, int column, String name, Type type) {
@@ -16,6 +17,10 @@ public class RecordField extends AbstractDefinition {
         this.scope = scope;
     }
 
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
     @Override
     public <P, R> R accept(Visitor<P, R> visitor, P param) {
         return visitor.visit(this, param);
@@ -24,7 +29,8 @@ public class RecordField extends AbstractDefinition {
     @Override
     public String toString() {
         return "RecordField{" +
-                "scope=" + scope +
+                "offset=" + offset +
+                ", scope=" + scope +
                 '}';
     }
 }

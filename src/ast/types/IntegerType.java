@@ -23,7 +23,7 @@ public class IntegerType extends AbstractType {
     }
 
     @Override
-    public int getSize() { return 2; }
+    public int getNumberOfBytes() { return 2; }
 
     @Override
     public boolean isNotLogical() {

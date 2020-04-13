@@ -13,6 +13,8 @@ public class FunctionType extends AbstractType {
     private List<VariableDefinition> args;
     private Type returnType;
 
+    private int argsNumberOfBytes;
+
     public FunctionType(int line, int column, List<VariableDefinition> params, Type returnType) {
         super(line, column);
         this.args = new ArrayList<>();
@@ -26,7 +28,7 @@ public class FunctionType extends AbstractType {
     }
 
     @Override
-    public int getSize() { return 0; }
+    public int getNumberOfBytes() { throw new IllegalStateException("Can't access error size, pending compilation errors."); }
 
     public List<VariableDefinition> getArgs() {
         return args;
@@ -34,6 +36,10 @@ public class FunctionType extends AbstractType {
 
     public Type getReturnType() {
         return returnType;
+    }
+
+    public void setArgsNumberOfBytes(int argsNumberOfBytes) {
+        this.argsNumberOfBytes = argsNumberOfBytes;
     }
 
     @Override
@@ -62,8 +68,9 @@ public class FunctionType extends AbstractType {
     @Override
     public String toString() {
         return "FunctionType{" +
-                "params=" + args +
+                "args=" + args +
                 ", returnType=" + returnType +
+                ", argsNumberOfBytes=" + argsNumberOfBytes +
                 '}';
     }
 }

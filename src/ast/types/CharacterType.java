@@ -23,7 +23,7 @@ public class CharacterType extends AbstractType {
     }
 
     @Override
-    public int getSize() { return 1; }
+    public int getNumberOfBytes() { return 1; }
 
     @Override
     public boolean isBuiltInType() { return true; }
