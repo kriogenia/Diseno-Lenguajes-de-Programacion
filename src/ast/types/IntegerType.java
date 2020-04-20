@@ -19,7 +19,7 @@ public class IntegerType extends AbstractType {
 
     @Override
     public String getName() {
-        return "integer";
+        return "int";
     }
 
     @Override

@@ -17,7 +17,7 @@ class AddressCGVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	/*
-		address[[ArrayAccess : expression -> left right]]() =
+		address[[ArrayAccess : expression -> type left right]]() =
 			address[[expression.left]]
 			value[[expression.right]]
 			<pushi> expression.type.size
@@ -34,7 +34,7 @@ class AddressCGVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	/*
-		address[[FieldAccess : expression -> expression name]]() =
+		address[[FieldAccess : expression -> type expression name]]() =
 			address[[expression.expression]]
 			<pushi> expression.name.type.size
 			<add>
@@ -47,7 +47,7 @@ class AddressCGVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	/*
-		address[[Variable : expression -> ID]]() =
+		address[[Variable : expression -> type name]]() =
 			if (expression.definition.scope == 0)
 				<pusha> expression.definition.offset;
 			else
@@ -59,8 +59,8 @@ class AddressCGVisitor extends AbstractCGVisitor<Void, Void> {
 		if (element.getDefinition().getScope() == 0)
 			cg.pusha(((VariableDefinition) element.getDefinition()).getOffset());
 		else {
-			cg.pusha(((VariableDefinition) element.getDefinition()).getOffset());
 			cg.pushbp();
+			cg.push(((VariableDefinition) element.getDefinition()).getOffset());
 			cg.add(IntegerType.getInstance());
 		}
 		return null;

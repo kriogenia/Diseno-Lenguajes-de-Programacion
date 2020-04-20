@@ -23,6 +23,10 @@ public class FunctionDefinition extends AbstractDefinition {
 
     public void setLocalsNumberOfBytes(int localsNumberOfBytes) { this.localsNumberOfBytes = localsNumberOfBytes; }
 
+    public int getLocalsNumberOfBytes() {
+        return localsNumberOfBytes;
+    }
+
     @Override
     public <P, R> R accept(Visitor<P, R> visitor, P param) {
         return visitor.visit(this, param);

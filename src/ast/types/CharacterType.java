@@ -19,7 +19,7 @@ public class CharacterType extends AbstractType {
 
     @Override
     public String getName() {
-        return "character";
+        return "char";
     }
 
     @Override

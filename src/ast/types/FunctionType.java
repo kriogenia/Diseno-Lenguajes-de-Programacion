@@ -42,6 +42,10 @@ public class FunctionType extends AbstractType {
         this.argsNumberOfBytes = argsNumberOfBytes;
     }
 
+    public int getArgsNumberOfBytes() {
+        return argsNumberOfBytes;
+    }
+
     @Override
     public Type parenthesis(List<Expression> types, ASTNode ast) {
         // Checks the number of parameters and arguments match

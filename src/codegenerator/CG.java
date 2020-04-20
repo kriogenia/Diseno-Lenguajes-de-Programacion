@@ -155,17 +155,18 @@ public class CG {
 	// FUNCTION INSTRUCTIONS
 
 	void call(String name) {
-		out.println("\tcall " + name);
+		out.println("\n' Invocation to the " + name + " function");
+		out.println("call " + name);
 		out.flush();
 	}
 
 	void enter(int bytes) {
-		out.println("\tenter " + bytes);
+		out.println("\tenter\t" + bytes);
 		out.flush();
 	}
 
 	void halt() {
-		out.println("\thalt");
+		out.println("halt\n\n");
 		out.flush();
 	}
 
@@ -188,6 +189,13 @@ public class CG {
 		out.flush();
 	}
 
+	// JUMP
+
+	void define(String name) {
+		out.println(" " + name + ":");
+		out.flush();
+	}
+
 	// LOAD AND STORE INSTRUCTIONS
 
 	void load(Type type) {
@@ -196,7 +204,7 @@ public class CG {
 	}
 
 	void store(Type type) {
-		out.print("\tstore" + type.getSuffix());
+		out.println("\tstore" + type.getSuffix());
 		out.flush();
 	}
 
@@ -239,32 +247,40 @@ public class CG {
 	// PUSH INSTRUCTIONS
 
 	void push(char value) {
-		out.println("\tpushb" + value);
+		out.println("\tpushb\t" + (int)value);
 		out.flush();
 	}
 
 	void push(int value) {
-		out.println("\tpushi" + value);
+		out.println("\tpushi\t" + value);
 		out.flush();
 	}
 
 	void push(double value) {
-		out.println("\tpushf" + value);
+		out.println("\tpushf\t" + value);
 		out.flush();
 	}
 
 	void pusha(int address) {
-		out.println("\tpusha" + address);
+		out.println("\tpusha\t" + address);
 		out.flush();
 	}
 
 	void pushbp() {
-		out.println("\tpush bp");
+		out.println("\tpush\tbp");
+		out.flush();
+	}
+
+	// COMMENT
+
+	void comment(String comment) {
+		out.println("\t' * " + comment);
 		out.flush();
 	}
 
 	private void source(String source) {
-		out.println("#source \"" + source + "\"");
+		out.println("\n#source \"" + source + "\"\n");
+		out.flush();
 	}
 
 }

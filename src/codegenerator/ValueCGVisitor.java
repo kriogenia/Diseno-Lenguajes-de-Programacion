@@ -16,7 +16,7 @@ class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	/*
-		value[[ArithmeticOperation : expression -> left right operation]]() =
+		value[[ArithmeticOperation : expression -> type left right operation]]() =
 			value[[expression.left]]
 			value[[expression.right]]
 			<add/sub/mul/div/mod>
@@ -29,7 +29,7 @@ class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	/*
-		value[[ArrayAccess : expression -> left right]]() =
+		value[[ArrayAccess : expression -> type left right]]() =
 			address[[expression]]
 			<load> expression.type.suffix
 	 */
@@ -40,7 +40,7 @@ class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	/*
-		value[[Cast : expression -> expression type]]() =
+		value[[Cast : expression -> type expression type]]() =
 			value[[expression.expression]]
 			<b2i/i2b/i2f/f2i>
 	 */
@@ -51,7 +51,7 @@ class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	/*
-		value[[CharacterLiteral: expression -> value]]() =
+		value[[CharacterLiteral: expression -> type value]]() =
 			<pushb> expression.value
 	 */
 	public Void visit(CharacterLiteral element, Void params) {
@@ -60,7 +60,7 @@ class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	/*
-		value[[ComparisonOperation : expression -> left right operation]]() =
+		value[[ComparisonOperation : expression -> type left right operation]]() =
 			value[[expression.left]]
 			value[[expression.right]]
 			<ge/gt/le/lt/eq/ne>
@@ -73,7 +73,7 @@ class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	/*
-		value[[FieldAccess : expression -> expression name]]() =
+		value[[FieldAccess : expression -> type expression name]]() =
 			address[[expression]]
 			<load> expression.type.suffix
 	 */
@@ -84,7 +84,7 @@ class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	/*
-		value[[IntegerLiteral: expression -> value]]() =
+		value[[IntegerLiteral: expression -> type value]]() =
 			<pushi> expression.value
 	 */
 	public Void visit(IntegerLiteral element, Void params) {
@@ -93,7 +93,7 @@ class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	/*
-		value[[LogicalNotOperation: expression -> expression]]() =
+		value[[LogicalNotOperation: expression -> type expression]]() =
 			value[[expression.expression]]
 			<not>
 	 */
@@ -104,7 +104,7 @@ class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	/*
-		value[[LogicalOperation : expression -> left right operation]]() =
+		value[[LogicalOperation : expression -> type left right operation]]() =
 			value[[expression.left]]
 			value[[expression.right]]
 			<add/or>
@@ -117,7 +117,7 @@ class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	/*
-		value[[RealLiteral: expression -> value]]() =
+		value[[RealLiteral: expression -> type value]]() =
 			<pushf> expression.value
 	 */
 	public Void visit(RealLiteral element, Void params) {
@@ -126,7 +126,7 @@ class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	/*
-		value[[UnaryMinusOperation: expression -> expression]]() =
+		value[[UnaryMinusOperation: expression -> type expression]]() =
 			<pushi 0>
 			value[[expression.expression]]
 			<sub>
@@ -139,7 +139,7 @@ class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	/*
-		value[[Variable : expression -> ID]]() =
+		value[[Variable : expression -> type name]]() =
 			address[[expression]]
 			<load> expression.type.suffix()
 	 */
