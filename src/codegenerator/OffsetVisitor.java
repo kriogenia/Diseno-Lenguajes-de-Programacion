@@ -1,10 +1,11 @@
-package visitors;
+package codegenerator;
 
 import ast.definitions.FunctionDefinition;
 import ast.definitions.VariableDefinition;
 import ast.types.FunctionType;
 import ast.types.RecordField;
 import ast.types.RecordType;
+import visitor.AbstractVisitor;
 
 public class OffsetVisitor extends AbstractVisitor<Void, Void> {
 

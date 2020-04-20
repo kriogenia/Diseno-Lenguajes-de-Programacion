@@ -2,7 +2,7 @@ package ast.sentences;
 
 import ast.AbstractASTNode;
 import ast.expressions.Expression;
-import visitors.Visitor;
+import visitor.Visitor;
 
 public class Return extends AbstractASTNode implements Sentence {
 

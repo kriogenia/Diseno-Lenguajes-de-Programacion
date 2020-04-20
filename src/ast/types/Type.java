@@ -9,6 +9,7 @@ public interface Type extends ASTNode  {
 
 	String getName();
 	int getNumberOfBytes();
+	String getSuffix();
 
 	boolean isNotLogical();
 	boolean isBuiltInType();

@@ -1,6 +1,6 @@
 package ast.expressions;
 
-import visitors.Visitor;
+import visitor.Visitor;
 
 public class LogicalOperation extends AbstractBinarialOperation {
 

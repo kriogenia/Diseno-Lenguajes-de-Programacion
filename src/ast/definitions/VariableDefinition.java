@@ -2,7 +2,7 @@ package ast.definitions;
 
 import ast.sentences.Sentence;
 import ast.types.Type;
-import visitors.Visitor;
+import visitor.Visitor;
 
 public class VariableDefinition extends AbstractDefinition implements Sentence {
 

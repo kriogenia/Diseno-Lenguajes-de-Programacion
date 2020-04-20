@@ -1,6 +1,6 @@
 package ast.types;
 
-import visitors.Visitor;
+import visitor.Visitor;
 
 public class ErrorType extends AbstractType implements Comparable {
 

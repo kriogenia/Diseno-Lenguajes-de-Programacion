@@ -1,7 +1,7 @@
 package ast.types;
 
 import ast.ASTNode;
-import visitors.Visitor;
+import visitor.Visitor;
 
 public class IntegerType extends AbstractType {
 
@@ -24,6 +24,10 @@ public class IntegerType extends AbstractType {
 
     @Override
     public int getNumberOfBytes() { return 2; }
+
+    public String getSuffix() {
+        return "i";
+    }
 
     @Override
     public boolean isNotLogical() {

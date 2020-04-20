@@ -1,15 +1,15 @@
-import ast.ErrorHandler;
+import codegenerator.CG;
+import codegenerator.ExecuteCGVisitor;
+import errorhandler.ErrorHandler;
 import ast.Program;
-import introspector.model.IntrospectorModel;
-import introspector.view.IntrospectorTree;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import parser.CmmLexer;
 import parser.CmmParser;
-import visitors.IdentificationVisitor;
-import visitors.OffsetVisitor;
-import visitors.TypeCheckingVisitor;
+import semantic.IdentificationVisitor;
+import codegenerator.OffsetVisitor;
+import semantic.TypeCheckingVisitor;
 
 public class Main {
 	
@@ -28,16 +28,21 @@ public class Main {
 		CmmParser parser = new CmmParser(tokens);	
 		Program p = parser.program().ast;
 
+		if (parser.getNumberOfSyntaxErrors() > 0) {
+			System.out.println("Program with syntax errors. No code was generated.");
+			return;
+		}
+
 		p.accept(new IdentificationVisitor(), null);
 		p.accept(new TypeCheckingVisitor(), null);
 
-		ErrorHandler.getInstance().showErrors(System.out);
-
-		if (!ErrorHandler.getInstance().anyError())
+		if (ErrorHandler.getInstance().anyError()) {
+			ErrorHandler.getInstance().showErrors(System.out);
+			System.out.println("Program with semantic errors. No code was generated.");
+		} else {
 			p.accept(new OffsetVisitor(), null);
-
-		IntrospectorModel model = new IntrospectorModel("Program", p);
-		new IntrospectorTree("Tree", model);
+			p.accept(new ExecuteCGVisitor(new CG(args[1], args[0])), null);
+		}
 	}
 	
 

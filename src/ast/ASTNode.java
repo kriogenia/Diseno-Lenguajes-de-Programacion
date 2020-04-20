@@ -1,6 +1,6 @@
 package ast;
 
-import visitors.Visitor;
+import visitor.Visitor;
 
 public interface ASTNode {
 

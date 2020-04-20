@@ -1,7 +1,7 @@
 package ast.types;
 
 import ast.ASTNode;
-import visitors.Visitor;
+import visitor.Visitor;
 
 public class RealType extends AbstractType {
 
@@ -24,6 +24,10 @@ public class RealType extends AbstractType {
 
     @Override
     public int getNumberOfBytes() { return 4; }
+
+    public String getSuffix() {
+        return "f";
+    }
 
     @Override
     public boolean isBuiltInType() { return true; }

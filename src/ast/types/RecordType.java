@@ -1,7 +1,7 @@
 package ast.types;
 
 import ast.ASTNode;
-import visitors.Visitor;
+import visitor.Visitor;
 
 import java.util.*;
 import java.util.stream.Collectors;

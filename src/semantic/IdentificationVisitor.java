@@ -1,12 +1,13 @@
-package visitors;
+package semantic;
 
-import ast.ErrorHandler;
+import errorhandler.ErrorHandler;
 import ast.definitions.Definition;
 import ast.definitions.FunctionDefinition;
 import ast.definitions.VariableDefinition;
 import ast.expressions.Variable;
 import ast.types.ErrorType;
-import visitors.symboltable.SymbolTable;
+import visitor.AbstractVisitor;
+import semantic.symboltable.SymbolTable;
 
 public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 

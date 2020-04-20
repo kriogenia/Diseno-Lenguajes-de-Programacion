@@ -12,6 +12,10 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
 		super(line, column);
 	}
 
+	public String getSuffix() {
+		return "";
+	}
+
 	@Override
 	public boolean isNotLogical() {
 		return true;

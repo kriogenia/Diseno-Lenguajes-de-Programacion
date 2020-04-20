@@ -1,7 +1,7 @@
 package ast.expressions;
 
 import ast.types.Type;
-import visitors.Visitor;
+import visitor.Visitor;
 
 public class Cast extends AbstractExpression {
 

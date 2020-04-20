@@ -1,7 +1,7 @@
 package ast.expressions;
 
 import ast.definitions.Definition;
-import visitors.Visitor;
+import visitor.Visitor;
 
 public class Variable extends AbstractExpression {
 

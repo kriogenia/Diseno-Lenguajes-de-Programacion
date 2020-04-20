@@ -1,4 +1,4 @@
-package visitors;
+package visitor;
 
 import ast.Program;
 import ast.definitions.FunctionDefinition;

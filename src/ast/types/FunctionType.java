@@ -3,7 +3,7 @@ package ast.types;
 import ast.ASTNode;
 import ast.definitions.VariableDefinition;
 import ast.expressions.Expression;
-import visitors.Visitor;
+import visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
