@@ -11,6 +11,10 @@ public class RealLiteral extends AbstractExpression {
         this.value = value;
     }
 
+    public double getValue() {
+        return value;
+    }
+
     @Override
     public <P, R> R accept(Visitor<P, R> visitor, P param) {
         return visitor.visit(this, param);

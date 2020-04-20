@@ -248,7 +248,7 @@ public class CG {
 		out.flush();
 	}
 
-	void push(float value) {
+	void push(double value) {
 		out.println("\tpushf" + value);
 		out.flush();
 	}

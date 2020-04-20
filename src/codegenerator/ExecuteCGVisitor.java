@@ -18,6 +18,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
 		super(cg);
 		this.valueCGVisitor = new ValueCGVisitor(cg);
 		this.addressCGVisitor = new AddressCGVisitor(cg, valueCGVisitor);
+		this.valueCGVisitor.setAddressCGVisitor(addressCGVisitor);
 	}
 
 	/*

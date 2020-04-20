@@ -11,6 +11,10 @@ public class CharacterLiteral extends AbstractExpression {
         this.value = value;
     }
 
+    public char getValue() {
+        return value;
+    }
+
     @Override
     public <P, R> R accept(Visitor<P, R> visitor, P param) {
         return visitor.visit(this, param);
