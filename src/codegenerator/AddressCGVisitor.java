@@ -1,5 +1,12 @@
 package codegenerator;
 
+import ast.definitions.VariableDefinition;
+import ast.expressions.ArrayAccess;
+import ast.expressions.FieldAccess;
+import ast.expressions.Variable;
+import ast.types.IntegerType;
+import ast.types.RecordType;
+
 class AddressCGVisitor extends AbstractCGVisitor<Void, Void> {
 
 	private ValueCGVisitor valueCGVisitor;
@@ -7,6 +14,36 @@ class AddressCGVisitor extends AbstractCGVisitor<Void, Void> {
 	AddressCGVisitor(CG cg, ValueCGVisitor valueCGVisitor) {
 		super(cg);
 		this.valueCGVisitor = valueCGVisitor;
+	}
+
+	/*
+		address[[ArrayAccess : expression -> left right]]() =
+			address[[expression.left]]
+			value[[expression.right]]
+			<pushi> expression.type.size
+			<mul>
+			<add>
+	 */
+	public Void visit(ArrayAccess element, Void params) {
+		element.getLeft().accept(this, params);
+		element.getRight().accept(valueCGVisitor, params);
+		cg.push(element.getType().getNumberOfBytes());
+		cg.mul(IntegerType.getInstance());
+		cg.add(IntegerType.getInstance());
+		return null;
+	}
+
+	/*
+		address[[FieldAccess : expression -> expression name]]() =
+			address[[expression.expression]]
+			<pushi> expression.name.type.size
+			<add>
+	 */
+	public Void visit(FieldAccess element, Void params) {
+		element.accept(this, params);
+		cg.push(((RecordType) element.getExpression().getType()).getOffsetOf(element.getName()));
+		cg.add(IntegerType.getInstance());
+		return null;
 	}
 
 	/*
@@ -18,5 +55,15 @@ class AddressCGVisitor extends AbstractCGVisitor<Void, Void> {
 	 			<push bp>
 	 			<addi>
 	 */
+	public Void visit(Variable element, Void params) {
+		if (element.getDefinition().getScope() == 0)
+			cg.pusha(((VariableDefinition) element.getDefinition()).getOffset());
+		else {
+			cg.pusha(((VariableDefinition) element.getDefinition()).getOffset());
+			cg.pushbp();
+			cg.add(IntegerType.getInstance());
+		}
+		return null;
+	}
 
 }

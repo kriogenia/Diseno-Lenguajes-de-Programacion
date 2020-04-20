@@ -21,6 +21,10 @@ public class RecordField extends AbstractDefinition {
         this.offset = offset;
     }
 
+    int getOffset() {
+        return offset;
+    }
+
     @Override
     public <P, R> R accept(Visitor<P, R> visitor, P param) {
         return visitor.visit(this, param);

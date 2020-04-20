@@ -19,6 +19,10 @@ public class VariableDefinition extends AbstractDefinition implements Sentence {
 
     public void setOffset(int offset) {this.offset = offset; }
 
+    public int getOffset() {
+        return offset;
+    }
+
     @Override
     public String toString() {
         return "VariableDefinition{" +

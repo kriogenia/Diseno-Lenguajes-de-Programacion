@@ -26,6 +26,11 @@ public class RecordType extends AbstractType {
                         df.getName() + " is already declared on this struct")).collect(Collectors.toList());
     }
 
+    public int getOffsetOf(String fieldName) {
+        Optional<RecordField> match = records.stream().filter(x -> x.getName().equals(fieldName)).findAny();
+        return match.map(RecordField::getOffset).orElse(-1);
+    }
+
     @Override
     public Type access(String field, ASTNode ast) {
         Optional<RecordField> match = records.stream().filter(f -> f.getName().equals(field)).findAny();
