@@ -166,7 +166,7 @@ public class CG {
 	}
 
 	void halt() {
-		out.println("halt\n\n");
+		out.println("halt\n");
 		out.flush();
 	}
 
@@ -192,7 +192,7 @@ public class CG {
 	// JUMP
 
 	void define(String name) {
-		out.println(" " + name + ":");
+		out.println("\n " + name + ":");
 		out.flush();
 	}
 
@@ -275,6 +275,11 @@ public class CG {
 
 	void comment(String comment) {
 		out.println("\t' * " + comment);
+		out.flush();
+	}
+
+	void commentLine(int line) {
+		out.println("\n#line\t" + line );
 		out.flush();
 	}
 

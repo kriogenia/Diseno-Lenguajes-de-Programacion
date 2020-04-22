@@ -68,6 +68,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
 				<ret 0,fundef.localNumberOfBytes,fundef.type.argsNumberOfBytes>
 	 */
 	public Void visit(FunctionDefinition element, Void params) {
+		cg.commentLine(element.getLine());
 		cg.define(element.getName());
 		cg.comment("Parameters");
 		for (Definition d: ((FunctionType) element.getType()).getArgs())
@@ -102,6 +103,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
 			<store> sentence.type.suffix
 	 */
 	public Void visit(Assign element, Void params) {
+		cg.commentLine(element.getLine());
 		element.getId().accept(addressCGVisitor, params);
 		element.getRefered().accept(valueCGVisitor, params);
 		cg.store(element.getId().getType());
@@ -125,6 +127,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
 				<store> exp.type.suffix
 	 */
 	public Void visit(Read element, Void params) {
+		cg.commentLine(element.getLine());
 		for(Expression s: element.getExpressions()) {
 			cg.comment("Read");
 			s.accept(addressCGVisitor, params);
@@ -151,6 +154,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
 	 */
 
 	public Void visit(Write element, Void params) {
+		cg.commentLine(element.getLine());
 		for(Expression exp: element.getExpressions()) {
 			cg.comment("Write");
 			exp.accept(valueCGVisitor, params);
