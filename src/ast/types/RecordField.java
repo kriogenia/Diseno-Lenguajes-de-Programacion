@@ -32,9 +32,6 @@ public class RecordField extends AbstractDefinition {
 
     @Override
     public String toString() {
-        return "RecordField{" +
-                "offset=" + offset +
-                ", scope=" + scope +
-                '}';
+        return "(" + super.getName() + " " + getType().getName() + ")";
     }
 }

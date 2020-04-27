@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 public class CG {
 
 	private PrintWriter out;
+	private int nextLabel;
 
 	public CG(String output, String source) {
 		try {
@@ -20,6 +21,20 @@ public class CG {
 			System.exit(-1);
 		}
 		this.source(source);
+		this.nextLabel = 0;
+	}
+
+	void start() {
+		out.println("\n' Invocation to the main function");
+		out.println("call main");
+		halt();
+		out.flush();
+	}
+
+	int getLabels(int number) {
+		int label = this.nextLabel;
+		this.nextLabel += number;
+		return label;
 	}
 
 	// ARITHMETIC OPERATIONS
@@ -155,8 +170,7 @@ public class CG {
 	// FUNCTION INSTRUCTIONS
 
 	void call(String name) {
-		out.println("\n' Invocation to the " + name + " function");
-		out.println("call " + name);
+		out.println("\tcall\t" + name);
 		out.flush();
 	}
 
@@ -171,7 +185,7 @@ public class CG {
 	}
 
 	void ret(int bReturn, int bLocal, int bArgs) {
-		out.println("\tret " + bReturn + "," + bLocal + "," + bArgs);
+		out.println("\tret " + bReturn + ", " + bLocal + ", " + bArgs);
 		out.flush();
 	}
 
@@ -193,6 +207,21 @@ public class CG {
 
 	void define(String name) {
 		out.println("\n " + name + ":");
+		out.flush();
+	}
+
+	void label(int number) {
+		out.println(" label" + number + ":");
+		out.flush();
+	}
+
+	void jmp(int label) {
+		out.println("\tjmp label" + label);
+		out.flush();
+	}
+
+	void jz(int label) {
+		out.println("\tjz label" + label);
 		out.flush();
 	}
 

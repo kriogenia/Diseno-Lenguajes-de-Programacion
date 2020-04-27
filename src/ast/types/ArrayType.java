@@ -16,7 +16,7 @@ public class ArrayType extends AbstractType {
 
 	@Override
 	public String getName() {
-		return "array of " + type.getName();
+		return "["+ this.size + "," + type.getName() + "]";
 	}
 
 	@Override

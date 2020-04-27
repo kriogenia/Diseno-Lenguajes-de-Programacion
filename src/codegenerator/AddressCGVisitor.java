@@ -40,7 +40,7 @@ class AddressCGVisitor extends AbstractCGVisitor<Void, Void> {
 			<add>
 	 */
 	public Void visit(FieldAccess element, Void params) {
-		element.accept(this, params);
+		element.getExpression().accept(this, params);
 		cg.push(((RecordType) element.getExpression().getType()).getOffsetOf(element.getName()));
 		cg.add(IntegerType.getInstance());
 		return null;

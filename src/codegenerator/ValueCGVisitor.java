@@ -1,7 +1,6 @@
 package codegenerator;
 
 import ast.expressions.*;
-import ast.types.CharacterType;
 
 class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
@@ -36,6 +35,18 @@ class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 	public Void visit(ArrayAccess element, Void params) {
 		element.accept(addressCGVisitor, params);
 		cg.load(element.getType());
+		return null;
+	}
+
+	/*
+		value[[Call : expression -> function param*^]() =
+				for(Expression exp: expression.param*)
+					value[[exp]]
+				<call> expression.function.name
+	 */
+	public Void visit(Call element, Void params) {
+		element.getParams().forEach((p) -> p.accept(this, params));
+		cg.call(element.getFunction().getName());
 		return null;
 	}
 

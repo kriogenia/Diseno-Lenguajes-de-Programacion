@@ -42,7 +42,9 @@ public class RecordType extends AbstractType {
 
     @Override
     public String getName() {
-        return "struct";
+        String name = "record(";
+        name += records.stream().map(RecordField::toString).reduce(String::concat).get();
+        return name + ")";
     }
 
     @Override

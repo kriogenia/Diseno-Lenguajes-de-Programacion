@@ -68,7 +68,10 @@ type returns [Type ast]:
     primitiveType {$ast = $primitiveType.ast;}
     // Struct
     | ('struct' '{' {List<RecordField> list = new ArrayList<>();}
-        (type ID ';' {list.add(new RecordField($ID.getLine(), $ID.getCharPositionInLine(), $ID.text, $type.ast));})+ '}'
+        (type id1=ID {list.add(new RecordField($id1.getLine(), $id1.getCharPositionInLine(), $id1.text, $type.ast));}
+        (',' id2=ID
+            {   list.add(new RecordField($id2.getLine(), $id2.getCharPositionInLine(), $id2.text, $type.ast));   }
+            )* ';' )+ '}'
         {$ast = new RecordType($start.getLine(), $start.getCharPositionInLine(), list);})
     // Array
     | it=type {Stack<Integer> sizes = new Stack<>();}

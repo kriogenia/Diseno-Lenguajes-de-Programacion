@@ -1,5 +1,7 @@
 package semantic;
 
+import ast.Program;
+import ast.definitions.Definition;
 import errorhandler.ErrorHandler;
 import ast.definitions.FunctionDefinition;
 import ast.expressions.*;
@@ -10,6 +12,18 @@ import visitor.AbstractVisitor;
 import java.util.List;
 
 public class TypeCheckingVisitor extends AbstractVisitor<Type,Void> {
+
+	@Override
+	public Void visit(Program element, Type params) {
+		super.visit(element, params);
+		// Checks the last function is the main function
+		Definition lastFunction = element.getDefinitions().get(element.getDefinitions().size()-1);
+		if (!lastFunction.getName().equals("main"))
+			ErrorHandler.getInstance().addError(
+					new ErrorType(lastFunction.getLine(), lastFunction.getColumn(),
+							"(Invalid Program): The last function should be the main function"));
+		return null;
+	}
 
 	/***************************************************
 	 *                 DEFINITIONS                     *
