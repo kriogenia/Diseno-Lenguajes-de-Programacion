@@ -17,10 +17,10 @@ class AddressCGVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	/*
-		address[[ArrayAccess : expression -> type left right]]() =
-			address[[expression.left]]
-			value[[expression.right]]
-			<pushi> expression.type.size
+		address[[ArrayAccess : expr -> left:Expression right:Expression]]() =
+			address[[left]]
+			value[[right]]
+			<pushi> expr.type.size
 			<mul>
 			<add>
 	 */
@@ -34,9 +34,9 @@ class AddressCGVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	/*
-		address[[FieldAccess : expression -> type expression name]]() =
-			address[[expression.expression]]
-			<pushi> expression.name.type.size
+		address[[FieldAccess : expr -> left:Expression]]() =
+			address[[left]]
+			<pushi> expr.name.type.size
 			<add>
 	 */
 	public Void visit(FieldAccess element, Void params) {
@@ -47,11 +47,11 @@ class AddressCGVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	/*
-		address[[Variable : expression -> type name]]() =
-			if (expression.definition.scope == 0)
-				<pusha> expression.definition.offset;
+		address[[Variable : Expression -> def:Definition]]() =
+			if (def.scope == 0)
+				<pusha> def.offset;
 			else
-	 			<pusha> expression.definition.offset
+	 			<pusha> def.offset
 	 			<push bp>
 	 			<addi>
 	 */

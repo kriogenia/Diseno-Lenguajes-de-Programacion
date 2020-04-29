@@ -3,6 +3,7 @@ package ast.types;
 import ast.ASTNode;
 import ast.definitions.VariableDefinition;
 import ast.expressions.Expression;
+import errorhandler.ErrorHandler;
 import visitor.Visitor;
 
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class FunctionType extends AbstractType {
             if (types.get(i).getType() instanceof ErrorType)
                 return types.get(i).getType();
             // Checks the parameters are of the correct type
-            if (getArgs().get(i).getType() != types.get(i).getType())
+            if (types.get(i).getType().promotesTo(getArgs().get(i).getType(), this) instanceof ErrorType)
                 return new ErrorType(ast.getLine(), ast.getColumn(), "(Invalid Call): Expected " +
                         getArgs().get(i).getType().getName() + " and received a " + types.get(i).getType().getName());
         }

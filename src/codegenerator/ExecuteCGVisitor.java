@@ -23,16 +23,16 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 	}
 
 	/*
-		execute [[Program : program -> definition*]]() =
+		execute [[Program : program -> defs:Definition*]]() =
 
-			for(Definition d: definition*)
+			for(Definition d: defs)
 				if(d instanceof VariableDefinition)
 					execute[[d]]
 
 			<call main>
 			<halt>
 
-			for(Definition d: definition*)
+			for(Definition d: defs)
 				if(d instanceof FunctionDefinition)
 					execute[[d]]
 	 */
@@ -52,20 +52,20 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 	}
 
 	/*
-		execute[[FunctionDefinition : fundef -> type sentence* localNumberOfBytes]]() =
-			fundef.name <:>
+		execute[[FunctionDefinition : def -> body:Sentence*]]() =
+			def.name <:>
 			<' * Parameters>
-			for(Definition d: fundef.type.args)
+			for(Definition d: def.type.args)
 				execute[[d]]
 			<' * Local variables>
-			for(Definition d: fundef.sentence*)
+			for(Definition d: body)
 				if (d instance of VariableDefinition)
 					execute[[d]]
-			<enter> fundef.localNumberOfBytes
-			for(Sentence st: sentences*)
+			<enter> def.localNumberOfBytes
+			for(Sentence st: body)
 				execute[[st]]
-			if (fundef.type.returnType == Void)
-				<ret 0,fundef.localNumberOfBytes,fundef.type.argsNumberOfBytes>
+			if (def.type.returnType == Void)
+				<ret 0, def.localNumberOfBytes, def.type.argsNumberOfBytes>
 	 */
 	public Void visit(FunctionDefinition element, FunctionDefinition params) {
 		cg.commentLine(element.getLine());
@@ -88,8 +88,8 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 	}
 
 	/*
-		execute[[VariableDefinition : vardef -> type offset]]() =
-			' * vardef.type.name vardef.name vardef.offset
+		execute[[VariableDefinition : def ]]() =
+			' * def.type.name def.name def.offset
 	 */
 	public Void visit(VariableDefinition element, FunctionDefinition params) {
 		cg.comment(element.getType().getName() + " " + element.getName() + " (offset " + element.getOffset() + ")");
@@ -97,7 +97,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 	}
 
 	/*
-		execute[[Assign : sentence -> type id refered]]() =
+		execute[[Assign : sentence -> id:Expression refered:Expression]]() =
 			address[[id]]
 			value[[refered]]
 			<store> sentence.type.suffix
@@ -111,10 +111,10 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 	}
 
 	/*
-		execute[[Call : expression -> function param*^]() =
-			value[[expression]]
-			if (expression.type != void)
-				<pop> expression.type.suffix
+		execute[[Call : sentence -> function:Variable params:Expression*]() =
+			value[[sentence]]
+			if (sentence.type != void)
+				<pop> sentence.type.suffix
 	 */
 	public Void visit(Call element, FunctionDefinition params) {
 		cg.commentLine(element.getLine());
@@ -125,15 +125,15 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 	}
 
 	/*
-		execute[[If : sentence -> type expression sentence1* sentence2*]() =
+		execute[[If : sentence -> condition:Expression then:Sentence* else:Sentence*]() =
 			int labelNumber = cg.getLabels(2);
-			value[[expr]]
+			value[[condition]]
 			<jz label> labelNumber
-			for (Sentence s: sentence1*)
+			for (Sentence s: then)
 				execute[[s]]
 			<jpm label> labelNumber+1
 			<label> labelNumber <:>
-			for (Sentence s: sentence2*)
+			for (Sentence s: else)
 				execute[[s]]
 			<label> labelNumber+1 <:>
 	 */
@@ -154,12 +154,12 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 	}
 
 	/*
-		execute[[Read : sentence -> expression*]]() =
+		execute[[Read : sentence -> exprs:Expression*]]() =
 			' * Read
-			for (Expression exp: expression*)
-				address[[exp]]
-				<in> exp.type.suffix
-				<store> exp.type.suffix
+			for (Expression e: exprs)
+				address[[e]]
+				<in> e.type.suffix
+				<store> e.type.suffix
 	 */
 	public Void visit(Read element, FunctionDefinition params) {
 		cg.commentLine(element.getLine());
@@ -172,9 +172,9 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 	}
 
 	/*
-		execute[[Return : sentence -> type expression]](fundef) =
-			value[[expression]]
-			<ret> sentence.expression.type.size <,> fundef.localsNumberOfBytes <,> fundef.type.argsNumberOfBytes
+		execute[[Return : sentence -> returnValue:Expression]](FunctionDefinition fundef) =
+			value[[returnValue]]
+			<ret> returnValue.type.size <,> fundef.localsNumberOfBytes <,> fundef.type.argsNumberOfBytes
 	 */
 	public Void visit(Return element, FunctionDefinition params) {
 		cg.commentLine(element.getLine());
@@ -187,12 +187,12 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 	}
 
 	/*
-		execute[[While : sentence -> condition sentence*]]() =
+		execute[[While : sentence -> condition:Expression body:Sentence*]]() =
 			int labelNumber = cg.getLabels(2);
 			<label> labelNumber <:>
 			value[[condition]]
 			<jz label> labelNumber+1
-			for(Sentence s: sentence.sentence*)
+			for(Sentence s: body)
 				execute[[s]]
 			<jmp label> labelNumber
 			<label> labelNumber+1 <:>
@@ -212,11 +212,11 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 	}
 
 	/*
-		execute[[Write : sentence -> expression*]]() =
+		execute[[Write : sentence -> exprs:Expression*]]() =
 			' * Write
-			for(Expression exp: expression*)
-				value[[exp]]
-				<out> exp.type.suffix()
+			for(Expression e: exprs)
+				value[[e]]
+				<out> e.type.suffix()
 	 */
 	public Void visit(Write element, FunctionDefinition params) {
 		cg.commentLine(element.getLine());

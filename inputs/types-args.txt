@@ -1,0 +1,15 @@
+int a,b,c;
+
+void f(int d, int e) {}
+
+void g(int f, double h) {}
+
+void main() {
+    a = 1;
+    b = 2;
+    c = 3;
+    f(a);                   // * Error 1 - Invalid number
+    f(a, b);
+    g(c, c);
+    g(c, (double) c);       // * Error 2 - Invalid type
+}
